@@ -1,0 +1,40 @@
+
+OZF to PNG Converter 
+--------------------
+
+Version 1.1 beta (15.12.2006)
+Written in SPb specially for 4x4 users :)
+
+Formats supported
+-----------------
+ - OZF2
+ - OZFX3 produced by img2ozf
+ - OZFX3 produced by map merge
+
+Please send all your comments, questions, 
+bug requests to <netoropyga@bk.ru>
+
+Usage
+-----
+
+ozf2img [-h] <-iFILE>
+
+Where:
+-h : Adaptive ozfx3 decryption. Try to use it if something goes wrong.
+-i : Process FILE (Ozi Explorer .map).
+
+     FILE also may be folder name for batch conversion.
+     Recursive folder processing is not supported in this build.
+
+History
+-------
+
+v1.1
+
+- Fixed problems with floating encryption depth
+- Fixed bug with decoded ozf2 (no PNG have been generated)
+- Cosmetic bugfixing
+
+v1.0 
+- Initial
+

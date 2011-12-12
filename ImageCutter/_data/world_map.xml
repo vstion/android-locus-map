@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<map>
+	<name>World</name>
+	<zoom>1</zoom>
+	<projection>Mercator</projection>
+	<description>OSM world map</description>
+	<position id="A" x="0" y="0">
+	      <lat>85</lat>
+	      <lon>-180</lon>
+	</position>
+	<position id="B" x="2000" y="0">
+	      <lat>85</lat>
+	      <lon>180</lon>
+	</position>
+	<position id="C" x="0" y="1995">
+	      <lat>-85</lat>
+	      <lon>-180</lon>
+	</position>
+	<position id="D" x="2000" y="1995">
+	      <lat>-85</lat>
+	      <lon>180</lon>
+	</position>
+	<imageWidth>2000</imageWidth>
+    <imageHeight>1995</imageHeight>
+</map>
