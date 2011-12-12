@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="menion.android.locus.addon.publiclib.sample"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="4" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <application android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+        <activity android:name=".LocusAddonPublicLibSampleActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <!-- thanks to this, app appear in list of available locations -->    
+			<intent-filter>
+          		<action android:name="menion.android.locus.GET_POINT" />
+          		<category android:name="android.intent.category.DEFAULT" />
+       		</intent-filter>
+       	
+			<!-- thanks to this, app appear in sub-menu of every point -->
+			<intent-filter>
+      			<action android:name="menion.android.locus.ON_POINT_ACTION" />
+      			<category android:name="android.intent.category.DEFAULT" />
+   			</intent-filter> 
+            
+            <!-- thanks to this, app appear in function list -->
+			<intent-filter>
+      			<action android:name="menion.android.locus.MAIN_FUNCTION" />
+      			<category android:name="android.intent.category.DEFAULT" />
+   			</intent-filter>
+        </activity>
+
+		<provider android:name="menion.android.locus.addon.publiclib.sample.DataStorageProvider"
+			android:authorities="menion.android.locus.addon.publiclib.sample.datastorageprovider">
+		</provider>
+		
+    </application>
+</manifest>

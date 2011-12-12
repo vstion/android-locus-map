@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+   	<LinearLayout
+  		style="@style/PanelTopMainWithBg">
+
+  		<ImageButton style="@style/PanelButton"
+       		android:src="@drawable/ic_home"
+       		android:id="@+id/btn_home" />
+		<ImageView style="@style/SeparatorVertical" />
+
+		<TextView style="@style/TitleText" 
+			android:text="Locus API"/>
+   		<ProgressBar style="@style/TitleProgressIndicator"
+       		android:id="@+id/title_refresh_progress"
+       		android:visibility="gone" />
+
+    	<ImageView style="@style/SeparatorVertical" />
+   		<ImageButton style="@style/PanelButton"
+       		android:src="@drawable/ic_warning"
+       		android:id="@+id/btn_warning" />
+    	<ImageView style="@style/SeparatorVertical" />
+   		<ImageButton style="@style/PanelButton"
+       		android:src="@drawable/ic_question"
+       		android:id="@+id/btn_question" />
+	</LinearLayout>
+    
+	<ScrollView 
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+   		<LinearLayout 
+   		    android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical" >
+   		    
+			<Button android:text="Send one point (with import)" android:id="@+id/button1"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+		
+			<Button android:text="Send one point with icon (with import)" android:id="@+id/button2"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+		
+			<Button android:text="Send more points (with import)" android:id="@+id/button3"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+		
+			<Button android:text="Send more points with icon" android:id="@+id/button4"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+				
+			<Button android:text="Send Geocaching point" android:id="@+id/button5"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+				
+			<Button android:text="Send more Geocaching points" android:id="@+id/button6"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+				
+			<Button android:text="GC points over Cursor" android:id="@+id/button7"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+				
+			<Button android:text="Send GPX file to system" android:id="@+id/button8"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+				
+			<Button android:text="Send GPX file directly to Locus" android:id="@+id/button9"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+			
+			<Button android:text="GC points over local File" android:id="@+id/button10"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+			
+			<Button android:text="Display point with OnDisplay callback" android:id="@+id/button11"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
+   		</LinearLayout>
+	</ScrollView>
+</LinearLayout>
+
