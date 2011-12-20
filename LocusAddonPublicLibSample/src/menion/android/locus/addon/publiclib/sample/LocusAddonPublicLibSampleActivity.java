@@ -1,3 +1,22 @@
+/*  
+ * Copyright 2011, Asamm s.r.o.
+ * 
+ * This file is part of LocusAddonPublicLibSample.
+ * 
+ * LocusAddonPublicLibSample is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *  
+ * LocusAddonPublicLibSample is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with LocusAddonPublicLibSample.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package menion.android.locus.addon.publiclib.sample;
 
 import java.io.File;
@@ -206,7 +225,7 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 				// get filepath
 				File externalDir = Environment.getExternalStorageDirectory();
 				if (externalDir == null || !(externalDir.exists())) {
-					Log.e(TAG, "problem with obtain of External di");
+					Log.e(TAG, "problem with obtain of External dir");
 					return;
 				}
 				
