@@ -19,29 +19,17 @@
 
 package menion.android.locus.addon.publiclib.utils;
 
-import java.util.ArrayList;
+public class RequiredVersionMissingException extends Exception {
 
-import menion.android.locus.addon.publiclib.geoData.PointsData;
-
-public class DataStorage {
-
-	private static ArrayList<PointsData> mData;
+	private static final long serialVersionUID = 1L;
 	
-	public static ArrayList<PointsData> getData() {
-		return mData;
+	private String mistake;
+	
+	public RequiredVersionMissingException(int versionPro, int versionFree) {
+		super("Required version: Pro (" + versionPro + "), or Free (" + versionFree + "), not installed!");
 	}
 	
-	public static void setData(ArrayList<PointsData> data) {
-		DataStorage.mData = data;
-	}
-	
-	public static void setData(PointsData data) {
-		DataStorage.mData = new ArrayList<PointsData>();
-		DataStorage.mData.add(data);
-	}
-	
-	public static void clearData() {
-		DataStorage.mData.clear();
-		DataStorage.mData = null;
+	public String getError() {
+		return mistake;
 	}
 }

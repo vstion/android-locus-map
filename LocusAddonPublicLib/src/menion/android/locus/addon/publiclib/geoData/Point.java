@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm s.r.o.
+ * Copyright 2011, Asamm soft, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 
@@ -19,6 +19,7 @@
 
 package menion.android.locus.addon.publiclib.geoData;
 
+import menion.android.locus.addon.publiclib.LocusUtils;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -166,14 +167,7 @@ public class Point implements Parcelable {
 		// load description
 		mDesc = in.readString();
 		// load separate location
-		mLoc = new Location(in.readString());
-		mLoc.setTime(in.readLong());
-		mLoc.setLatitude(in.readDouble());
-		mLoc.setLongitude(in.readDouble());
-		mLoc.setAltitude(in.readDouble());
-		mLoc.setAccuracy(in.readFloat());
-		mLoc.setBearing(in.readFloat());
-		mLoc.setSpeed(in.readFloat());
+		mLoc = LocusUtils.readLocation(in);
     	
     	switch (version) {
     	case 0:
@@ -203,14 +197,7 @@ public class Point implements Parcelable {
 		// write description
 		dest.writeString(mDesc);
 		// write location as separate values (due to some problems with 'magic number'
-		dest.writeString(mLoc.getProvider());
-		dest.writeLong(mLoc.getTime());
-		dest.writeDouble(mLoc.getLatitude());
-		dest.writeDouble(mLoc.getLongitude());
-		dest.writeDouble(mLoc.getAltitude());
-		dest.writeFloat(mLoc.getAccuracy());
-		dest.writeFloat(mLoc.getBearing());
-		dest.writeFloat(mLoc.getSpeed());
+		LocusUtils.writeLocation(dest, mLoc);
 		// write extra
 		dest.writeString(mExtraCallback);
 		dest.writeString(mExtraOnDisplay);

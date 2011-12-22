@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm s.r.o.
+ * Copyright 2011, Asamm soft, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 
@@ -42,6 +42,9 @@ public class LocusConst {
 	public static final String EXTRA_POINTS_CURSOR_URI = "EXTRA_POINTS_CURSOR_URI";
 	/* sends points data serialized as byte[] through file stored on SD card */
 	public static final String EXTRA_POINTS_FILE_PATH = "EXTRA_POINTS_FILE_PATH";
+	
+	/* sends one single track to locus */
+	public static final String EXTRA_TRACKS_SINGLE = "EXTRA_TRACKS_SINGLE";
 	
 	/**
 	 * extra parameter that set if data should be firstly imported. This is used in intent 

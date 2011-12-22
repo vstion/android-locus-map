@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm s.r.o.
+ * Copyright 2011, Asamm soft, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 
@@ -31,7 +31,7 @@ public class PointsData implements Parcelable {
 
 	private static final int VERSION = 0;
 	
-	// Unique name. PointsData send to Locus with same name will be overwrited in Locus
+	// Unique name. PointsData send to Locus with same name will be overwrite in Locus
 	private String mName;
 	// icon applied to whole PointsData
 	private Bitmap mBitmap;

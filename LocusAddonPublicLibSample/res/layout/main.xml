@@ -69,6 +69,9 @@
 			
 			<Button android:text="Display point with OnDisplay callback" android:id="@+id/button11"
 				android:layout_width="match_parent" android:layout_height="wrap_content" />
+				
+			<Button android:text="Display one track" android:id="@+id/button12"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
    		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

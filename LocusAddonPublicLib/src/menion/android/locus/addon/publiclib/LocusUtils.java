@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm s.r.o.
+ * Copyright 2011, Asamm soft, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 
@@ -25,7 +25,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Parcel;
+import android.util.Log;
 
 /**
  * Locus Helper class
@@ -36,6 +39,8 @@ import android.net.Uri;
  */
 public class LocusUtils {
 
+	private static final String TAG = "LocusUtils";
+	
 	/***********************************/
 	/*           CHECK PART            */
 	/***********************************/
@@ -57,6 +62,23 @@ public class LocusUtils {
 	 */
 	public static boolean isLocusAvailable(Context context) {
 		return getLocusPackageInfo(context) != null;
+	}
+	
+	public static boolean isLocusAvailable(Context context, int versionPro, int versionFree) {
+		PackageInfo pi = getLocusPackageInfo(context);
+		if (pi == null) {
+			return false;
+		} else {
+			if (pi.packageName.equalsIgnoreCase(LOCUS_PRO_PACKAGE_NAME)) {
+				Log.i(TAG, "isLocusAvailable(), Locus Pro, available:" + pi.versionCode + ", needed:" + versionPro);
+				return pi.versionCode >= versionPro;
+			} else if (pi.packageName.equalsIgnoreCase(LOCUS_FREE_PACKAGE_NAME)) {
+				Log.i(TAG, "isLocusAvailable(), Locus Free, available:" + pi.versionCode + ", needed:" + versionPro);
+				return pi.versionCode >= versionFree;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	/**
@@ -97,14 +119,8 @@ public class LocusUtils {
 		return info.versionName;
 	}
 
-	/**
-	 * Returns Locus version code, e.g. <code>99</code>. If Locus is not
-	 * installed returns <code>-1</code>.
-	 * 
-	 * @param context
-	 *            actual {@link Context}
-	 * @return version code
-	 */
+	// use direct check isLocusAvailable()
+	@Deprecated
 	public static int getLocusVersionCode(Context context) {
 		PackageInfo info = getLocusPackageInfo(context);
 
@@ -225,5 +241,32 @@ public class LocusUtils {
 		if (index == -1)
 			return "*/*";
 		return "application/" + name.substring(index + 1);
+	}
+	
+	/***********************************/
+	/*        PARCELABLE PART          */
+	/***********************************/
+	
+	public static void writeLocation(Parcel dest, Location loc) {
+		dest.writeString(loc.getProvider());
+		dest.writeLong(loc.getTime());
+		dest.writeDouble(loc.getLatitude());
+		dest.writeDouble(loc.getLongitude());
+		dest.writeDouble(loc.getAltitude());
+		dest.writeFloat(loc.getAccuracy());
+		dest.writeFloat(loc.getBearing());
+		dest.writeFloat(loc.getSpeed());
+	}
+	
+	public static Location readLocation(Parcel in) {
+		Location loc = new Location(in.readString());
+		loc.setTime(in.readLong());
+		loc.setLatitude(in.readDouble());
+		loc.setLongitude(in.readDouble());
+		loc.setAltitude(in.readDouble());
+		loc.setAccuracy(in.readFloat());
+		loc.setBearing(in.readFloat());
+		loc.setSpeed(in.readFloat());
+		return loc;
 	}
 }

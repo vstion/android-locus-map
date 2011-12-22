@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm s.r.o.
+ * Copyright 2011, Asamm soft, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 
@@ -27,7 +27,9 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.geoData.PointsData;
+import menion.android.locus.addon.publiclib.geoData.Track;
 import menion.android.locus.addon.publiclib.utils.DataStorage;
+import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcel;
@@ -36,6 +38,10 @@ import android.util.Log;
 public class DisplayData {
 
 	private static final String TAG = "DisplayData";
+	
+	/*******************************/
+	/*        DISPLAY POINTS       */
+	/*******************************/
 	
 	/**
 	 * Simple way how to send data over intent to Locus. Count that intent in
@@ -74,7 +80,7 @@ public class DisplayData {
 	 * Allow to send data to locus, by storing serialized version of data into file. This method
 	 * can have advantage over cursor in simplicity of implementation and also that filesize is
 	 * not limited as in Cursor method. On second case, need permission for disk access and should
-	 * be slower due to IO operations. Be careful about size of data. This method can avoid OutOfMemory
+	 * be slower due to IO operations. Be careful about size of data. This method can cause OutOfMemory
 	 * error on Locus side if data are too big
 	 *   
 	 * @param context
@@ -136,7 +142,12 @@ public class DisplayData {
 		intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, filepath);
 		return sendData(context, intent, callImport);
 	}
-	
+
+	/**
+	 * Invert method to {@link #sendDataFile}. This load serialized data from file object
+	 * @param filepath
+	 * @return
+	 */
 	public static ArrayList<PointsData> getDataFile(String filepath) {
 		ArrayList<PointsData> returnData = new ArrayList<PointsData>();
 		
@@ -221,12 +232,38 @@ public class DisplayData {
 		return sendData(context, intent, callImport);
 	}
 
-	// private final call to Locus
-	private static boolean sendData(Context context, Intent intent, boolean callImport) {
-		// really exist locus?
-		if (!LocusUtils.isLocusAvailable(context)) {
-			Log.w(TAG, "Locus is not installed");
+	/*******************************/
+	/*        DISPLAY TRACKS       */
+	/*******************************/
+	
+	public static boolean sendData(Context context, Track track, boolean callImport)
+			throws RequiredVersionMissingException {
+		if (track == null)
 			return false;
+		Intent intent = new Intent();
+		intent.putExtra(LocusConst.EXTRA_TRACKS_SINGLE, track);
+		return sendData(context, intent, callImport, 64, 125);
+	}
+	
+	/*******************************/
+	/*        PRIVATE CALLS        */
+	/*******************************/
+	
+	private static boolean sendData(Context context, Intent intent,
+			boolean callImport){
+		try {
+			return sendData(context, intent, callImport, -1, -1);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	private static boolean sendData(Context context, Intent intent,
+			boolean callImport, int versionPro, int versionFree) throws RequiredVersionMissingException {
+		// really exist locus?
+		if (!LocusUtils.isLocusAvailable(context, versionPro, versionFree)) {
+			throw new RequiredVersionMissingException(versionPro, versionFree);
 		}
 		
 		// check intent firstly
@@ -252,6 +289,7 @@ public class DisplayData {
 				intent.getParcelableArrayListExtra(LocusConst.EXTRA_POINTS_DATA_ARRAY) == null && 
 				intent.getParcelableExtra(LocusConst.EXTRA_POINTS_DATA) == null &&
 				intent.getStringExtra(LocusConst.EXTRA_POINTS_CURSOR_URI) == null && 
-				intent.getStringExtra(LocusConst.EXTRA_POINTS_FILE_PATH) == null);
+				intent.getStringExtra(LocusConst.EXTRA_POINTS_FILE_PATH) == null &&
+				intent.getParcelableExtra(LocusConst.EXTRA_TRACKS_SINGLE) == null);
 	}
 }
