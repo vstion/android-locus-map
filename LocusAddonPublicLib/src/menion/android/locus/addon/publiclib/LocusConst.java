@@ -28,9 +28,21 @@ public class LocusConst {
 	public static final String INTENT_GET_LOCATION = "menion.android.locus.GET_POINT";
 	public static final String INTENT_ON_POINT_ACTION = "menion.android.locus.ON_POINT_ACTION";
 	public static final String INTENT_MAIN_FUNCTION = "menion.android.locus.MAIN_FUNCTION";
+	
+	/**
+	 * Intent used for getting location from Locus to your application. This one, is used just to start
+	 * Locus with this request.
+	 * Available since Locus 1.15.4 (Pro 64, Free 126).
+	 */
+	public static final String ACTION_PICK_LOCATION = "android.intent.action.LOCUS_PICK_LOCATION";
+	
+	/**
+	 * Action used for receiving Location from Locus
+	 */
+	public static final String ACTION_RECEIVE_LOCATION = "android.intent.action.ON_LOCATION_RECEIVE";
 
 	/**
-	 * basic intent used for display data. Use API for creating intent and not directly
+	 * Basic intent used for display data. Use API for creating intent and not directly
 	 */
 	public static final String INTENT_DISPLAY_DATA = "android.intent.action.LOCUS_PUBLIC_LIB_DATA";
 
@@ -43,17 +55,20 @@ public class LocusConst {
 	/* sends points data serialized as byte[] through file stored on SD card */
 	public static final String EXTRA_POINTS_FILE_PATH = "EXTRA_POINTS_FILE_PATH";
 	
-	/* sends one single track to locus */
+	/**
+	 * Sends one single track to Locus
+	 * Available since Locus 1.15.4 (Pro 64, Free 126).
+	 */
 	public static final String EXTRA_TRACKS_SINGLE = "EXTRA_TRACKS_SINGLE";
 	
 	/**
-	 * extra parameter that set if data should be firstly imported. This is used in intent 
+	 * Extra parameter that set if data should be firstly imported. This is used in intent 
 	 * that sends also 
 	 */ 
 	public static final String EXTRA_CALL_IMPORT = "EXTRA_CALL_IMPORT";
 	
 	/**
-	 * if you set to any point "setExtraOnDisplay" callback, then when Locus display points and
+	 * If you set to any point "setExtraOnDisplay" callback, then when Locus display points and
 	 * ask for extended version, return result as Point object included in extra place in intent
 	 */
 	public static final String EXTRA_POINT = "EXTRA_POINT";

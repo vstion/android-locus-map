@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.DisplayData;
+import menion.android.locus.addon.publiclib.LocusConst;
 import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
@@ -30,6 +31,7 @@ import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.geoData.Track;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
@@ -226,6 +228,14 @@ public class SampleCalls {
 			DisplayData.sendData(activity, track, false);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, "callSendOneTrack()", e);
+		}
+	}
+	
+	public void pickLocation() {
+		// check availability and start action
+		if (LocusUtils.isLocusAvailable(activity, 63, 126)) {
+			Intent intent = new Intent(LocusConst.ACTION_PICK_LOCATION);
+			activity.startActivity(intent);			
 		}
 	}
 	

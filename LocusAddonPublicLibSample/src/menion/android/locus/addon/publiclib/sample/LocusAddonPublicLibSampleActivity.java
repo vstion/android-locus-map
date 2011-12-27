@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -37,7 +38,7 @@ import android.widget.Toast;
 
 public class LocusAddonPublicLibSampleActivity extends Activity {
 	
-//	private static final String TAG = "LocusAddonPublicLibSampleActivity";
+	private static final String TAG = "LocusAddonPublicLibSampleActivity";
 	
 	/*
 	 * Useful TIPS:
@@ -164,6 +165,14 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			}
 		});
         
+        Button btn13 = (Button) findViewById(R.id.button13);
+        btn13.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				calls.pickLocation();
+			}
+		});
+        
         /*************************/
         /*    NOW CHECK INTENT   */
         /*************************/
@@ -236,6 +245,20 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			finish();
 			// or you may set RESULT_CANCEL if you don't have improved version of Point, then locus
 			// just show current available version
+        } else if (LocusIntents.isIntentReceiveLocation(intent)) {
+        	Point p = LocusIntents.handleActionReceiveLocation(intent);
+        	if (p != null) {
+            	new AlertDialog.Builder(this).
+            	setTitle("Intent - PickLocation").
+            	setMessage("Received intent with point:\n\n" + p.getName() + "\n\nloc:" + p.getLocation() + 
+            			"\n\ngcData:" + (p.getGeocachingData() == null ? "sorry, but no..." : p.getGeocachingData().cacheID)).
+            	setPositiveButton("Close", new DialogInterface.OnClickListener() {
+    				@Override
+    				public void onClick(DialogInterface dialog, int which) {}
+    			}).show();
+        	} else {
+        		Log.w(TAG, "request PickLocation, canceled");
+        	}
         }
     }
 }

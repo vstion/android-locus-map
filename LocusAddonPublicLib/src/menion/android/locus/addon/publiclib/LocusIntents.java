@@ -184,6 +184,54 @@ public class LocusIntents {
 				(Location) intent.getParcelableExtra("locCenter"));
 	}
 	
+	/*
+	   Pick location from Locus
+	  -------------------------------
+	   - this feature can be used to obtain location from Locus, from same dialog (locus usually pick location). 
+	   Because GetLocation dialog, used in Locus need to have already initialized whole core of Locus, this dialog
+	   cannot be called directly, but needs to be started from Main map screen. This screen have anyway flag
+	   android:launchMode="singleTask", so there is no possibility to use startActivityForResult in this way.
+	   
+	   Be careful with this function, because Locus will after "pick location" action, call new intent with 
+	   ON_LOCATION_RECEIVE action, which will start your activity again without "singleTask" or similar flag
+	   
+	   Current functionality can be created by
+	   
+	   1. register intent-filter for your activity
+	   
+		<intent-filter>
+   			<action android:name="android.intent.action.ON_LOCATION_RECEIVE" />
+   			<category android:name="android.intent.category.DEFAULT" />
+		</intent-filter>
+    
+		2. register intent receiver in your application
+		
+		check sample application, where this functionality is implemented
+
+	 */
+	
+	public static boolean isIntentReceiveLocation(Intent intent) {
+		return isRequiredAction(intent, LocusConst.ACTION_RECEIVE_LOCATION);
+	}
+	
+	public static Point handleActionReceiveLocation(Intent intent) 
+			throws NullPointerException {
+		// check source data
+		if (intent == null)
+			throw new NullPointerException("Intent cannot be null");
+		// check intent itself
+		if (!isIntentReceiveLocation(intent)) {
+			return null;
+		}
+		
+		// last version (Locus 1.15.0 and more)
+		if (intent.hasExtra("location")) {
+			return intent.getParcelableExtra("location");
+		} else {
+			return null;
+		}
+	}
+	
 	/**********************************/
 	/*      SOME HANDY FUNCTIONS      */
 	/**********************************/
