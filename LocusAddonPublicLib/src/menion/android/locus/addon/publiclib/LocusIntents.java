@@ -86,8 +86,16 @@ public class LocusIntents {
       		<action android:name="menion.android.locus.ON_POINT_ACTION" />
       		<category android:name="android.intent.category.DEFAULT" />
    		</intent-filter>
+   		
+   		- extra possibility to act only on geocache point
+		<intent-filter>
+      		<action android:name="menion.android.locus.ON_POINT_ACTION" />
+      		<category android:name="android.intent.category.DEFAULT" />
+      		<data android:scheme="locus" />
+      		<data android:path="menion.android.locus/point_geocache" />
+		</intent-filter>
        
-       2. register intent receiver in your application
+       2. register intent receiver in your application or use functions below
 
 		if (getIntent().getAction().equals(LocusConst.INTENT_ON_POINT_ACTION)) {
    			double lat = getIntent().getDoubleExtra("latitude", 0.0);

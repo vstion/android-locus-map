@@ -208,9 +208,9 @@ public class SampleCalls {
 			double lat = 50.0;
 			double lon = 15.0;
 			ArrayList<Location> locs = new ArrayList<Location>();
-			for (int i = 0; i < 1000; i++) {
-				lat += ((Math.random() - 0.5) * 0.1);
-				lon += (Math.random() * 0.01);
+			for (int i = 0; i < 5000; i++) {
+				lat += ((Math.random() - 0.5) * 0.01);
+				lon += (Math.random() * 0.001);
 				Location loc = new Location(TAG);
 				loc.setLatitude(lat);
 				loc.setLongitude(lon);

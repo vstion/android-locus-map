@@ -22,10 +22,17 @@
        		</intent-filter>
        	
 			<!-- thanks to this, app appear in sub-menu of every point -->
+<!-- 			<intent-filter> -->
+<!--       			<action android:name="menion.android.locus.ON_POINT_ACTION" /> -->
+<!--       			<category android:name="android.intent.category.DEFAULT" /> -->
+<!--    			</intent-filter>  -->
+   			<!-- thanks to this, app appear in sub-menu of only geocache! -->
 			<intent-filter>
       			<action android:name="menion.android.locus.ON_POINT_ACTION" />
       			<category android:name="android.intent.category.DEFAULT" />
-   			</intent-filter> 
+      			<data android:scheme="locus" />
+      			<data android:path="menion.android.locus/point_geocache" />
+   			</intent-filter>
             
             <!-- thanks to this, app appear in function list -->
 			<intent-filter>

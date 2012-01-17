@@ -196,7 +196,7 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 				}
 			}).show();
         } else if (LocusIntents.isIntentOnPointAction(intent)) {
-        	Point p = LocusIntents.handleIntentOnPointAction(intent);
+        	final Point p = LocusIntents.handleIntentOnPointAction(intent);
         	if (p == null) {
         		Toast.makeText(LocusAddonPublicLibSampleActivity.this, "Wrong INTENT - no point!", Toast.LENGTH_SHORT).show();
         	} else {
@@ -206,7 +206,18 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
             			"\n\ngcData:" + (p.getGeocachingData() == null ? "sorry, but no..." : p.getGeocachingData().cacheID)).
             	setPositiveButton("Close", new DialogInterface.OnClickListener() {
     				@Override
-    				public void onClick(DialogInterface dialog, int which) {}
+    				public void onClick(DialogInterface dialog, int which) {
+						// because current test version is registered on geocache data,
+						// I'll send as result updated geocache
+    					p.setDescription(p.getDescription() + " - UPDATED!");
+    					p.getLocation().setLatitude(p.getLocation().getLatitude() + 0.001);
+    					p.getLocation().setLongitude(p.getLocation().getLongitude() + 0.001);
+    					
+    					Intent retInent = new Intent();
+    					retInent.putExtra(LocusConst.EXTRA_POINT, p);
+    					setResult(RESULT_OK, retInent);
+    					finish();
+    				}
     			}).show();
         	}
         } else if (LocusIntents.isIntentMainFunction(intent)) {
