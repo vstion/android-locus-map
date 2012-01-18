@@ -252,4 +252,11 @@ public class LocusIntents {
 	public static void addPointToIntent(Intent intent, Point point) {
 		intent.putExtra(LocusConst.EXTRA_POINT, point);
 	}
+	
+	public static Intent prepareResultExtraOnDisplayIntent(Point p, boolean overridePoint) {
+		Intent intent = new Intent();
+		intent.putExtra(LocusConst.EXTRA_POINT, p);
+		intent.putExtra(LocusConst.EXTRA_POINT_OVERWRITE, overridePoint);
+		return intent;
+	}
 }
