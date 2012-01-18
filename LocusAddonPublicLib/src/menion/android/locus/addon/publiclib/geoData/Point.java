@@ -19,7 +19,9 @@
 
 package menion.android.locus.addon.publiclib.geoData;
 
+import menion.android.locus.addon.publiclib.LocusConst;
 import menion.android.locus.addon.publiclib.LocusUtils;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -109,6 +111,10 @@ public class Point implements Parcelable {
 		this.mExtraCallback = buff.toString();
 	}
 	
+	/**********************************/
+	/*      EXTRA_ON_DISPLAY PART     */
+	/**********************************/
+	
 	/**
 	 * Extra feature that allow to send to locus only partial point data. When you click on
 	 * point (in time when small point dialog should appear), locus send intent to your app,
@@ -144,6 +150,13 @@ public class Point implements Parcelable {
 	
 	public void setGeocachingData(PointGeocachingData gcData) {
 		this.mGeoCachingData = gcData;
+	}
+	
+	public Intent prepareResultExtraOnDisplayIntent(boolean overridePoint) {
+		Intent intent = new Intent();
+		intent.putExtra(LocusConst.EXTRA_POINT, this);
+		intent.putExtra(LocusConst.EXTRA_POINT_OVERWRITE, overridePoint);
+		return intent;
 	}
 	
 	/****************************/

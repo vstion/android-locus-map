@@ -250,8 +250,7 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			p.setName("Improved version!");
 			p.setDescription("Extra description to ultra improved point!, received value:" + value);
 			
-			Intent retInent = new Intent();
-			retInent.putExtra(LocusConst.EXTRA_POINT, p);
+			Intent retInent = p.prepareResultExtraOnDisplayIntent(true);
 			setResult(RESULT_OK, retInent);
 			finish();
 			// or you may set RESULT_CANCEL if you don't have improved version of Point, then locus

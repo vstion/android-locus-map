@@ -72,5 +72,11 @@ public class LocusConst {
 	 * ask for extended version, return result as Point object included in extra place in intent
 	 */
 	public static final String EXTRA_POINT = "EXTRA_POINT";
+	/** 
+	 * Optional boolean value in returning intent. Settings to true, Locus will overwrite point
+	 * in database. If you want to call "setExtraOnDisplay" next time, don't forget to set it
+	 * in updated waypoint!
+	 */
+	public static final String EXTRA_POINT_OVERWRITE = "EXTRA_POINT_OVERWRITE";
 
 }
