@@ -169,6 +169,14 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
         btn13.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				calls.callSendMultipleTracks();
+			}
+		});
+        
+        Button btn14 = (Button) findViewById(R.id.button14);
+        btn14.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				calls.pickLocation();
 			}
 		});

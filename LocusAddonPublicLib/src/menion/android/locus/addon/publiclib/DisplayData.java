@@ -245,6 +245,15 @@ public class DisplayData {
 		return sendData(context, intent, callImport, 64, 125);
 	}
 	
+	public static boolean sendDataTracks(Context context, ArrayList<Track> tracks, boolean callImport)
+			throws RequiredVersionMissingException {
+		if (tracks == null || tracks.size() == 0)
+			return false;
+		Intent intent = new Intent();
+		intent.putParcelableArrayListExtra(LocusConst.EXTRA_TRACKS_MULTI, tracks);
+		return sendData(context, intent, callImport, 69, 131);
+	}
+	
 	/*******************************/
 	/*        PRIVATE CALLS        */
 	/*******************************/
@@ -290,6 +299,7 @@ public class DisplayData {
 				intent.getParcelableExtra(LocusConst.EXTRA_POINTS_DATA) == null &&
 				intent.getStringExtra(LocusConst.EXTRA_POINTS_CURSOR_URI) == null && 
 				intent.getStringExtra(LocusConst.EXTRA_POINTS_FILE_PATH) == null &&
-				intent.getParcelableExtra(LocusConst.EXTRA_TRACKS_SINGLE) == null);
+				intent.getParcelableExtra(LocusConst.EXTRA_TRACKS_SINGLE) == null &&
+				intent.getParcelableArrayListExtra(LocusConst.EXTRA_TRACKS_MULTI) == null);
 	}
 }

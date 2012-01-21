@@ -62,6 +62,12 @@ public class LocusConst {
 	public static final String EXTRA_TRACKS_SINGLE = "EXTRA_TRACKS_SINGLE";
 	
 	/**
+	 * Sends multiple tracks to Locus
+	 * Available since Locus 1.16.3 (Pro 69, Free 131).
+	 */
+	public static final String EXTRA_TRACKS_MULTI = "EXTRA_TRACKS_MULTI";
+	
+	/**
 	 * Extra parameter that set if data should be firstly imported. This is used in intent 
 	 * that sends also 
 	 */ 

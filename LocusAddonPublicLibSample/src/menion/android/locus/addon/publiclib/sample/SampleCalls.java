@@ -197,35 +197,21 @@ public class SampleCalls {
 	
 	public void callSendOneTrack() {
 		try {
-			Track track = new Track();
-			track.setName("track from API");
-			track.setDescription("simple track bla bla bla ...");
-			
-			// set style
-			track.setStyle(Color.CYAN, 7.0f);
-
-			// generate points
-			double lat = 50.0;
-			double lon = 15.0;
-			ArrayList<Location> locs = new ArrayList<Location>();
-			for (int i = 0; i < 5000; i++) {
-				lat += ((Math.random() - 0.5) * 0.01);
-				lon += (Math.random() * 0.001);
-				Location loc = new Location(TAG);
-				loc.setLatitude(lat);
-				loc.setLongitude(lon);
-				locs.add(loc);
-			}
-			track.setLocations(locs);
-			
-			// set some points as highlighted wpts
-			ArrayList<Point> pts = new ArrayList<Point>();
-			pts.add(new Point("p1", locs.get(100)));
-			pts.add(new Point("p2", locs.get(300)));
-			pts.add(new Point("p3", locs.get(800)));
-			track.setPoints(pts);
-			
+			Track track = generateTrack(50, 15);
 			DisplayData.sendData(activity, track, false);
+		} catch (RequiredVersionMissingException e) {
+			Log.e(TAG, "callSendOneTrack()", e);
+		}
+	}
+	
+	public void callSendMultipleTracks() {
+		try {
+			ArrayList<Track> tracks = new ArrayList<Track>();
+			for (int i = 0; i < 5; i++) {
+				Track track = generateTrack(50 - i * 0.1, 15);
+				tracks.add(track);
+			}
+			DisplayData.sendDataTracks(activity, tracks, false);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, "callSendOneTrack()", e);
 		}
@@ -270,5 +256,36 @@ public class SampleCalls {
     	// set data and return point
     	p.setGeocachingData(gcData);
     	return p;
+    }
+    
+    private Track generateTrack(double startLat, double startLon) {
+		Track track = new Track();
+		track.setName("track from API (" + startLat + "|" + startLon + ")");
+		track.setDescription("simple track bla bla bla ...");
+		
+		// set style
+		track.setStyle(Color.CYAN, 7.0f);
+
+		// generate points
+		double lat = startLat;
+		double lon = startLon;
+		ArrayList<Location> locs = new ArrayList<Location>();
+		for (int i = 0; i < 1000; i++) {
+			lat += ((Math.random() - 0.5) * 0.01);
+			lon += (Math.random() * 0.001);
+			Location loc = new Location(TAG);
+			loc.setLatitude(lat);
+			loc.setLongitude(lon);
+			locs.add(loc);
+		}
+		track.setLocations(locs);
+		
+		// set some points as highlighted wpts
+		ArrayList<Point> pts = new ArrayList<Point>();
+		pts.add(new Point("p1", locs.get(100)));
+		pts.add(new Point("p2", locs.get(300)));
+		pts.add(new Point("p3", locs.get(800)));
+		track.setPoints(pts);
+		return track;
     }
 }
