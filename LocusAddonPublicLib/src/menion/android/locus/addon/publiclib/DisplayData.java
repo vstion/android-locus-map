@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm soft, s.r.o.
+ * Copyright 2011, Asamm Software, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 

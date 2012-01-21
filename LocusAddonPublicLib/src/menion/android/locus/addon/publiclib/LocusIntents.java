@@ -1,5 +1,5 @@
 /*  
- * Copyright 2011, Asamm soft, s.r.o.
+ * Copyright 2011, Asamm Software, s.r.o.
  * 
  * This file is part of LocusAddonPublicLib.
  * 
@@ -21,6 +21,7 @@ package menion.android.locus.addon.publiclib;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 
@@ -51,6 +52,41 @@ public class LocusIntents {
 	
 	public static boolean isIntentGetLocation(Intent intent) {
 		return isRequiredAction(intent, LocusConst.INTENT_GET_LOCATION);
+	}
+	
+	public interface OnIntentGetLocation {
+		/**
+		 * Handle received request
+		 * @param locGps if GPS is enabled, location is included (may be null)
+		 * @param locMapCenter center location of displayed map (may be null)
+		 */
+		public void onReceived(Location locGps, Location locMapCenter);
+		/**
+		 * If intent is not INTENT_GET_LOCATION intent or other problem occur
+		 */
+		public void onFailed();
+	}
+	
+	public static void handleIntentGetLocation(Context context, Intent intent,
+			OnIntentGetLocation handler) 
+			throws NullPointerException {
+		// check source data
+		if (intent == null)
+			throw new NullPointerException("Intent cannot be null");
+		// check intent itself
+		if (!isIntentGetLocation(intent)) {
+			handler.onFailed();
+			return;
+		}
+
+		// variables that may be obtain from intent (since locus pro 68/ free 130)
+		if (LocusUtils.isLocusAvailable(context, 68, 130)) {
+			handler.onReceived(
+					(Location) intent.getParcelableExtra("locGps"),
+					(Location) intent.getParcelableExtra("locCenter"));
+		} else {
+			handler.onReceived(null, null);
+		}
 	}
 	
 	public static boolean sendGetLocationData(Activity activity, 
