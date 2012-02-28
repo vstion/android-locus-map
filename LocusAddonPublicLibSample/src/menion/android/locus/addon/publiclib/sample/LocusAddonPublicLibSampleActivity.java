@@ -19,8 +19,11 @@
 
 package menion.android.locus.addon.publiclib.sample;
 
+import java.io.File;
+
 import menion.android.locus.addon.publiclib.LocusConst;
 import menion.android.locus.addon.publiclib.LocusIntents;
+import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.app.Activity;
@@ -181,11 +184,28 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			}
 		});
         
+        Button btn15 = (Button) findViewById(R.id.button15);
+        btn15.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LocusUtils.intentPickFile(LocusAddonPublicLibSampleActivity.this, 0);
+			}
+		});
+        
+        Button btn16 = (Button) findViewById(R.id.button16);
+        btn16.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LocusUtils.intentPickDir(LocusAddonPublicLibSampleActivity.this, 1);
+			}
+		});
+        
         /*************************/
         /*    NOW CHECK INTENT   */
         /*************************/
         
         Intent intent = getIntent();
+        Log.d(TAG, "received intent:" + intent);
         if (intent == null)
         	return;
         
@@ -278,5 +298,30 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
         		Log.w(TAG, "request PickLocation, canceled");
         	}
         }
+    }
+    
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+    	if (requestCode == 0) { 
+    		// pick file
+    		if (resultCode == RESULT_OK && data != null) {
+    			File file = new File(data.getData().toString());
+    			Toast.makeText(this, "Process successful\n\nFile:" + file.getName() + 
+    					", valid:" + file.exists(), Toast.LENGTH_SHORT).show();
+    		} else {
+    			Toast.makeText(this, "Process unsuccessful", Toast.LENGTH_SHORT).show();
+    		}
+    	}
+    	
+    	else if (requestCode == 1) { 
+    		// pick directory
+    		if (resultCode == RESULT_OK && data != null) {
+    			File dir = new File(data.getData().toString());
+    			Toast.makeText(this, "Process successful\n\nDir:" + dir.getName() + 
+    					", valid:" + dir.exists(), Toast.LENGTH_SHORT).show();
+    		} else {
+    			Toast.makeText(this, "Process unsuccessful", Toast.LENGTH_SHORT).show();
+    		}
+    	}
     }
 }

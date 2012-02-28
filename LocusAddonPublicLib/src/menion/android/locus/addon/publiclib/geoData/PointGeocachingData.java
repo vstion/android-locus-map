@@ -256,14 +256,6 @@ public class PointGeocachingData implements Parcelable {
    		 		GZIPInputStream zis = new GZIPInputStream(new ByteArrayInputStream(data), 10240);
    		 		StringBuffer buffer = new StringBuffer();
    		 		
-//   	   		    byte[] dataD = new byte[10240];
-//   	   		    int bytesRead;
-//   	   		    while ((bytesRead = zis.read(dataD)) != -1) {
-//   	   		        buffer.append(new String(dataD, 0, bytesRead, "utf-8"));
-//   	   		    }
-//   		 		String result = buffer.toString();
-//   		 		zis.close();
-   		 		
    		 		InputStreamReader isr = new InputStreamReader(zis, "UTF-8");
    		 		char[] dataD = new char[1024];
    		 		int charsRead;
@@ -274,8 +266,11 @@ public class PointGeocachingData implements Parcelable {
    		 		isr.close();
    		 		
    		 		// read short description
-   		 		if (lengthSD > 0)
+   		 		if (lengthSD > 0) {
    		 			shortDescription = result.substring(0, lengthSD);
+   		 		} else {
+   		 			shortDescription = "";
+   		 		}
    		 		
    		 		// read long description
 		 		longDescription = result.substring(lengthSD);

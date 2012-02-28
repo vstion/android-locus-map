@@ -84,5 +84,25 @@ public class LocusConst {
 	 * in updated waypoint!
 	 */
 	public static final String EXTRA_POINT_OVERWRITE = "EXTRA_POINT_OVERWRITE";
+	
+	/**********************************/
+	/*        BROADCAST PART          */
+	/**********************************/
+	
+	/**
+	 * Used for receiving locations from Locus
+	 */
+	public static final String ACTION_MAP_MOVED_TO_LOCATION = "android.intent.action.MAP_MOVED_TO_LOCATION";
 
+	/**
+	 * Used for sending data to Locus. These data should be small (and fast).
+	 * 
+	 * Content is same as with sending data by INTENT_DISPLAY_DATA anyway think mainly on best user
+	 * experience!! So suggestion is to send intent filled by EXTRA_POINTS_DATA or EXTRA_POINTS_DATA_ARRAY.
+	 * These are fastest methods and should be enough for sending useful amount of informations
+	 * 
+	 * Also, these data will have automatically EXTRA_CALL_IMPORT set to false, so they'll be directly
+	 * displayed on map without possibility for import! Also after display, map will not be centered.  
+	 */
+	public static final String ACTION_DISPLAY_DATA_SILENTLY = "android.intent.action.DISPLAY_DATA_SILENTLY";
 }

@@ -222,6 +222,10 @@ public class LocusIntents {
 			return;
 		}
 		
+		getLocationFromIntent(intent, handler);
+	}
+	
+	public static void getLocationFromIntent(Intent intent, OnIntentMainFunction handler) {
 		boolean gpsEnabled = intent.getBooleanExtra("gpsEnabled", false);
 		handler.onLocationReceived(gpsEnabled,
 				gpsEnabled ? (Location)intent.getParcelableExtra("locGps") : null,

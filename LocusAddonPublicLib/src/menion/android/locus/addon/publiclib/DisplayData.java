@@ -50,13 +50,25 @@ public class DisplayData {
 	 * @param data {@link PointsData} object that should be send to Locus
 	 * @param callImport whether import with this data should be called after Locus starts
 	 * @return true if success
+	 * @throws RequiredVersionMissingException 
 	 */
-	public static boolean sendData(Context context, PointsData data, boolean callImport) {
+	public static boolean sendData(Context context, PointsData data, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendData(LocusConst.INTENT_DISPLAY_DATA, context, data, callImport);
+	}
+	
+	public static boolean sendDataSilent(Context context, PointsData data, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, callImport);
+	}
+	
+	private static boolean sendData(String action, Context context, PointsData data, boolean callImport)
+			throws RequiredVersionMissingException {
 		if (data == null)
 			return false;
 		Intent intent = new Intent();
 		intent.putExtra(LocusConst.EXTRA_POINTS_DATA, data);
-		return sendData(context, intent, callImport);
+		return sendData(action, context, intent, callImport);
 	}
 	
 	/**
@@ -65,13 +77,25 @@ public class DisplayData {
 	 * @param context actual {@link Context}
 	 * @param data {@link ArrayList} of data that should be send to Locus
 	 * @return true if success
+	 * @throws RequiredVersionMissingException 
 	 */
-	public static boolean sendData(Context context, ArrayList<PointsData> data, boolean callImport) {
+	public static boolean sendData(Context context, ArrayList<PointsData> data, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendData(LocusConst.INTENT_DISPLAY_DATA, context, data, callImport);
+	}
+	
+	public static boolean sendDataSilent(Context context, ArrayList<PointsData> data, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, callImport);
+	}
+	
+	private static boolean sendData(String action, Context context, ArrayList<PointsData> data, boolean callImport)
+			throws RequiredVersionMissingException {
 		if (data == null)
 			return false;
 		Intent intent = new Intent();
 		intent.putParcelableArrayListExtra(LocusConst.EXTRA_POINTS_DATA_ARRAY, data);
-		return sendData(context, intent, callImport);
+		return sendData(action, context, intent, callImport);
 	}
 	
 	private static final int FILE_VERSION = 1;
@@ -88,8 +112,20 @@ public class DisplayData {
 	 * @param filepath
 	 * @param callImport
 	 * @return
+	 * @throws RequiredVersionMissingException 
 	 */
-	public static boolean sendDataFile(Context context, ArrayList<PointsData> data, String filepath, boolean callImport) {
+	public static boolean sendDataFile(Context context, ArrayList<PointsData> data, String filepath, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendDataFile(LocusConst.INTENT_DISPLAY_DATA, context, data, filepath, callImport);
+	}
+	
+	public static boolean sendDataFileSilent(Context context, ArrayList<PointsData> data, String filepath, boolean callImport) 
+			throws RequiredVersionMissingException {
+		return sendDataFile(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, filepath, callImport);
+	}
+	
+	private static boolean sendDataFile(String action, Context context, ArrayList<PointsData> data, String filepath,
+			boolean callImport) throws RequiredVersionMissingException {
 		if (data == null || data.size() == 0)
 			return false;
 		
@@ -140,7 +176,7 @@ public class DisplayData {
 		// store data to file
 		Intent intent = new Intent();
 		intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, filepath);
-		return sendData(context, intent, callImport);
+		return sendData(action, context, intent, callImport);
 	}
 
 	/**
@@ -202,15 +238,27 @@ public class DisplayData {
 	 * @param data ArrayList of data that should be send to Locus
 	 * @param callImport whether import with this data should be called after Locus starts
 	 * @return true if success
+	 * @throws RequiredVersionMissingException 
 	 */
-	public static boolean sendDataCursor(Context context, PointsData data, String uri, boolean callImport) {
+	public static boolean sendDataCursor(Context context, PointsData data, String uri, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendDataCursor(LocusConst.INTENT_DISPLAY_DATA, context, data, uri, callImport);
+	}
+	
+	public static boolean sendDataCursorSilent(Context context, PointsData data, String uri,
+			boolean callImport) throws RequiredVersionMissingException {
+		return sendDataCursor(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, uri, callImport);
+	}
+	
+	private static boolean sendDataCursor(String action, Context context, PointsData data, String uri,
+			boolean callImport) throws RequiredVersionMissingException {
 		if (data == null)
 			return false;
 		// set data
 		DataStorage.setData(data);
 		Intent intent = new Intent();
 		intent.putExtra(LocusConst.EXTRA_POINTS_CURSOR_URI, uri);
-		return sendData(context, intent, callImport);
+		return sendData(action, context, intent, callImport);
 	}
 	
 	/**
@@ -220,16 +268,27 @@ public class DisplayData {
 	 * @param context actual context
 	 * @param data ArrayList of data that should be send to Locus
 	 * @return true if success
+	 * @throws RequiredVersionMissingException 
 	 */
 	public static boolean sendDataCursor(Context context, ArrayList<PointsData> data,
-			String uri, boolean callImport) {
+			String uri, boolean callImport) throws RequiredVersionMissingException {
+		return sendDataCursor(LocusConst.INTENT_DISPLAY_DATA, context, data, uri, callImport);
+	}
+	
+	public static boolean sendDataCursorSilent(Context context, ArrayList<PointsData> data,
+			String uri, boolean callImport) throws RequiredVersionMissingException {
+		return sendDataCursor(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, uri, callImport);
+	}
+	
+	private static boolean sendDataCursor(String action, Context context, ArrayList<PointsData> data,
+			String uri, boolean callImport) throws RequiredVersionMissingException {
 		if (data == null)
 			return false;
 		// set data
 		DataStorage.setData(data);
 		Intent intent = new Intent();
 		intent.putExtra(LocusConst.EXTRA_POINTS_CURSOR_URI, uri);
-		return sendData(context, intent, callImport);
+		return sendData(action, context, intent, callImport);
 	}
 
 	/*******************************/
@@ -238,38 +297,59 @@ public class DisplayData {
 	
 	public static boolean sendData(Context context, Track track, boolean callImport)
 			throws RequiredVersionMissingException {
+		return sendData(LocusConst.INTENT_DISPLAY_DATA, context, track, callImport);
+	}
+	
+	public static boolean sendDataSilent(Context context, Track track, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, track, callImport);
+	}
+	
+	private static boolean sendData(String action, Context context, Track track, boolean callImport)
+			throws RequiredVersionMissingException {
 		if (track == null)
 			return false;
 		Intent intent = new Intent();
 		intent.putExtra(LocusConst.EXTRA_TRACKS_SINGLE, track);
-		return sendData(context, intent, callImport, 64, 125);
+		return sendData(action, context, intent, callImport, 64, 125);
 	}
 	
 	public static boolean sendDataTracks(Context context, ArrayList<Track> tracks, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendDataTracks(LocusConst.INTENT_DISPLAY_DATA, context, tracks, callImport);
+	}
+	
+	public static boolean sendDataTracksSilent(Context context, ArrayList<Track> tracks, boolean callImport)
+			throws RequiredVersionMissingException {
+		return sendDataTracks(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, tracks, callImport);
+	}
+	
+	private static boolean sendDataTracks(String action, Context context, ArrayList<Track> tracks, boolean callImport)
 			throws RequiredVersionMissingException {
 		if (tracks == null || tracks.size() == 0)
 			return false;
 		Intent intent = new Intent();
 		intent.putParcelableArrayListExtra(LocusConst.EXTRA_TRACKS_MULTI, tracks);
-		return sendData(context, intent, callImport, 69, 131);
+		return sendData(action, context, intent, callImport, 69, 131);
 	}
 	
 	/*******************************/
 	/*        PRIVATE CALLS        */
 	/*******************************/
 	
-	private static boolean sendData(Context context, Intent intent,
-			boolean callImport){
-		try {
-			return sendData(context, intent, callImport, -1, -1);
-		} catch (RequiredVersionMissingException e) {
-			e.printStackTrace();
-			return false;
-		}
+	private static boolean sendData(String action, Context context, Intent intent,
+			boolean callImport) throws RequiredVersionMissingException{
+		return sendData(action, context, intent, callImport, -1, -1);
 	}
 	
-	private static boolean sendData(Context context, Intent intent,
+	private static boolean sendData(String action, Context context, Intent intent,
 			boolean callImport, int versionPro, int versionFree) throws RequiredVersionMissingException {
+		// set correct versions (mainly due to new functionality)
+		if (action.equals(LocusConst.ACTION_DISPLAY_DATA_SILENTLY)) {
+			versionFree = Math.max(versionFree, 202);
+			versionPro = Math.max(versionFree, 202);
+		}
+		
 		// really exist locus?
 		if (!LocusUtils.isLocusAvailable(context, versionPro, versionFree)) {
 			throw new RequiredVersionMissingException(versionPro, versionFree);
@@ -281,12 +361,19 @@ public class DisplayData {
 			return false;
 		}
 		
-		intent.putExtra(LocusConst.EXTRA_CALL_IMPORT, callImport);
-		
 		// create intent with right calling method
-		intent.setAction(LocusConst.INTENT_DISPLAY_DATA);
-		// finally start activity
-		context.startActivity(intent);
+		intent.setAction(action);
+		
+		// set import tag
+		if (action.equals(LocusConst.ACTION_DISPLAY_DATA_SILENTLY)) {
+			context.sendBroadcast(intent);
+		} else {
+			// set import tag
+			intent.putExtra(LocusConst.EXTRA_CALL_IMPORT, callImport);
+			// finally start activity
+			context.startActivity(intent);			
+		}
+		
 		return true;
 	}
 	

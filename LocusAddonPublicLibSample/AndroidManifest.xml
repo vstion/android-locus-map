@@ -51,5 +51,11 @@
 			android:authorities="menion.android.locus.addon.publiclib.sample.datastorageprovider">
 		</provider>
 		
+	    <receiver android:name="menion.android.locus.addon.publiclib.sample.EventReceiver">
+			<intent-filter>
+        		<action android:name="android.intent.action.MAP_MOVED_TO_LOCATION" />
+      		</intent-filter>
+    	</receiver>
+		
     </application>
 </manifest>

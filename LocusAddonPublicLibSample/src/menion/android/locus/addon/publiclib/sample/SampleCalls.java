@@ -51,70 +51,97 @@ public class SampleCalls {
 	}
 	
 	public void callSendOnePoint() {
-		PointsData pd = new PointsData("callSendOnePoint");
-		pd.addPoint(generatePoint(0));
-		if (DisplayData.sendData(activity, pd, true)) {
-			Log.w(TAG, "point sended succesfully");
-		} else {
-			Log.w(TAG, "problem with sending");
+		try {
+			PointsData pd = new PointsData("callSendOnePoint");
+			pd.addPoint(generatePoint(0));
+			if (DisplayData.sendData(activity, pd, true)) {
+				Log.w(TAG, "point sended succesfully");
+			} else {
+				Log.w(TAG, "problem with sending");
+			}
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public void callSendOnePointWithIcon() {
-		PointsData pd = new PointsData("callSendOnePointWithIcon");
-		pd.setBitmap(BitmapFactory.decodeResource(
-				activity.getResources(), R.drawable.ic_hide_default));
-		pd.addPoint(generatePoint(0));
-		DisplayData.sendData(activity, pd, true);
+		try {
+			PointsData pd = new PointsData("callSendOnePointWithIcon");
+			pd.setBitmap(BitmapFactory.decodeResource(
+					activity.getResources(), R.drawable.ic_hide_default));
+			pd.addPoint(generatePoint(0));
+
+			DisplayData.sendData(activity, pd, true);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/* send more points - LIMIT DATA TO MAX 1000 (really max 1500),
      *  more cause troubles. It easy and fast method but depend on data size, so intent
      *  with lot of geocaches will be really limited */
 	public void callSendMorePoints() {
-		PointsData pd = new PointsData("callSendMorePoints");
-		for (int i = 0; i < 1000; i++)
-			pd.addPoint(generatePoint(i));
-		DisplayData.sendData(activity, pd, true);
+		try {
+			PointsData pd = new PointsData("callSendMorePoints");
+			for (int i = 0; i < 1000; i++)
+				pd.addPoint(generatePoint(i));
+
+			DisplayData.sendData(activity, pd, true);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/* similar to previous method. Every PointsData object have defined icon that is
 	 * applied on every points. So if you want to send more points with various icons,
 	 * you have to define for every pack specific PointsData object */
 	public void callSendMorePointsWithIcons() {
-		ArrayList<PointsData> data = new ArrayList<PointsData>();
-		
-		PointsData pd1 = new PointsData("test4a");
-		pd1.setBitmap(BitmapFactory.decodeResource(
-				activity.getResources(), R.drawable.ic_hide_default));
-		for (int i = 0; i < 100; i++)
-			pd1.addPoint(generatePoint(i));
-		
-		PointsData pd2 = new PointsData("test4b");
-		pd2.setBitmap(BitmapFactory.decodeResource(
-				activity.getResources(), R.drawable.ic_cancel_default));
-		for (int i = 0; i < 100; i++)
-			pd2.addPoint(generatePoint(i));
-		
-		
-		data.add(pd1);
-		data.add(pd2);
-		DisplayData.sendData(activity, data, false);
+		try {
+			ArrayList<PointsData> data = new ArrayList<PointsData>();
+			
+			PointsData pd1 = new PointsData("test4a");
+			pd1.setBitmap(BitmapFactory.decodeResource(
+					activity.getResources(), R.drawable.ic_hide_default));
+			for (int i = 0; i < 100; i++)
+				pd1.addPoint(generatePoint(i));
+			
+			PointsData pd2 = new PointsData("test4b");
+			pd2.setBitmap(BitmapFactory.decodeResource(
+					activity.getResources(), R.drawable.ic_cancel_default));
+			for (int i = 0; i < 100; i++)
+				pd2.addPoint(generatePoint(i));
+			
+			data.add(pd1);
+			data.add(pd2);
+			DisplayData.sendData(activity, data, false);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void callSendOnePointGeocache() {
-		PointsData pd = new PointsData("test5");
-		pd.addPoint(generateGeocache(0));
-		DisplayData.sendData(activity, pd, false);
+		try {
+			PointsData pd = new PointsData("test5");
+			pd.addPoint(generateGeocache(0));
+
+			DisplayData.sendData(activity, pd, false);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/* limit here is much more tight! Intent have limit on data size (around 1MB, so if you want to send
      * geocaches, don't rather use this method */
 	public void callSendMorePointsGeocacheIntentMehod() {
-		PointsData pd = new PointsData("test6");
-		for (int i = 0; i < 100; i++)
-			pd.addPoint(generateGeocache(i));
-		DisplayData.sendData(activity, pd, false);
+		try {
+			PointsData pd = new PointsData("test6");
+			for (int i = 0; i < 100; i++)
+				pd.addPoint(generateGeocache(i));
+
+			DisplayData.sendData(activity, pd, false);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
     /* This used custom DataStorageProvider class. Look at it. 
@@ -127,15 +154,19 @@ public class SampleCalls {
      * Locus call. When Locus grab data, data will be removed to prevent some memory issue. 
      */ 
 	public void callSendMorePointsGeocacheContentProviderMethod() {
-		PointsData pd = new PointsData("test07");
-		for (int i = 0; i < 1000; i++)
-			pd.addPoint(generateGeocache(i));
-		
-		ArrayList<PointsData> data = new ArrayList<PointsData>();
-		data.add(pd);
-		
-		DisplayData.sendDataCursor(activity, data,
-				"content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(), false);
+		try {
+			PointsData pd = new PointsData("test07");
+			for (int i = 0; i < 1000; i++)
+				pd.addPoint(generateGeocache(i));
+			
+			ArrayList<PointsData> data = new ArrayList<PointsData>();
+			data.add(pd);
+
+			DisplayData.sendDataCursor(activity, data,
+					"content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(), false);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void callSendFileToSystem() {
@@ -156,43 +187,49 @@ public class SampleCalls {
 	
 	/* send date with method, that store byte[] data in raw file and send locus link to this file */
 	public void callSendDateOverFile() {
-		// get filepath
-		File externalDir = Environment.getExternalStorageDirectory();
-		if (externalDir == null || !(externalDir.exists())) {
-			Log.e(TAG, "problem with obtain of External dir");
-			return;
-		}
-		
-		String filePath = externalDir.getAbsolutePath();
-		if (!filePath.endsWith("/"))
-			filePath += "/";
-		filePath += "/Android/data/menion.android.locus.addon.publiclib.sample/files/testFile.locus";
+		try {
+			// get filepath
+			File externalDir = Environment.getExternalStorageDirectory();
+			if (externalDir == null || !(externalDir.exists())) {
+				Log.e(TAG, "problem with obtain of External dir");
+				return;
+			}
+			
+			String filePath = externalDir.getAbsolutePath();
+			if (!filePath.endsWith("/"))
+				filePath += "/";
+			filePath += "/Android/data/menion.android.locus.addon.publiclib.sample/files/testFile.locus";
 
-		PointsData pd = new PointsData("test07");
-		for (int i = 0; i < 1000; i++)
-			pd.addPoint(generateGeocache(i));
-		
-		ArrayList<PointsData> data = new ArrayList<PointsData>();
-		data.add(pd);
-		
-		DisplayData.sendDataFile(activity,
-				data,
-				filePath,
-				false);
+			PointsData pd = new PointsData("test07");
+			for (int i = 0; i < 1000; i++)
+				pd.addPoint(generateGeocache(i));
+			
+			ArrayList<PointsData> data = new ArrayList<PointsData>();
+			data.add(pd);
+			
+			DisplayData.sendDataFile(activity, data, filePath, false);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
     /* allow to display special point, that when shown, will call back to this application. You may use this
      * for loading extra data. So you send simple point and when show, you display extra information */ 
 	public void callSendOnePointWithCallbackOnDisplay() {
-		PointsData pd = new PointsData("test2");
-		Point p = generatePoint(0);
-		p.setExtraOnDisplay(
-				"menion.android.locus.addon.publiclib.sample",
-				"menion.android.locus.addon.publiclib.sample.LocusAddonPublicLibSampleActivity",
-				"myOnDisplayExtraActionId",
-				"0");
-		pd.addPoint(p);
-		DisplayData.sendData(activity, pd, false);
+		try {
+			PointsData pd = new PointsData("test2");
+			Point p = generatePoint(0);
+			p.setExtraOnDisplay(
+					"menion.android.locus.addon.publiclib.sample",
+					"menion.android.locus.addon.publiclib.sample.LocusAddonPublicLibSampleActivity",
+					"myOnDisplayExtraActionId",
+					"0");
+			pd.addPoint(p);
+			
+			DisplayData.sendData(activity, pd, false);
+		} catch (RequiredVersionMissingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void callSendOneTrack() {

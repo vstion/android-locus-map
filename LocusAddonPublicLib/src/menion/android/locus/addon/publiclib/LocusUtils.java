@@ -21,6 +21,8 @@ package menion.android.locus.addon.publiclib;
 
 import java.io.File;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -62,6 +64,16 @@ public class LocusUtils {
 	 */
 	public static boolean isLocusAvailable(Context context) {
 		return getLocusPackageInfo(context) != null;
+	}
+	
+	/**
+	 * Use for versions above 200 (So 2.0.0 and above). They have same ID now 
+	 * @param context
+	 * @param version
+	 * @return
+	 */
+	public static boolean isLocusAvailable(Context context, int version) {
+		return isLocusAvailable(context, version, version);
 	}
 	
 	public static boolean isLocusAvailable(Context context, int versionPro, int versionFree) {
@@ -242,6 +254,28 @@ public class LocusUtils {
 			return "*/*";
 		return "application/" + name.substring(index + 1);
 	}
+	
+	/***********************************/
+	/*          USEFUL TOOLS           */
+	/***********************************/
+	
+	/**
+	 * Allow to call activity for File pick. You can use Locus picker for this purpose, but
+	 * check if Locus version 202 and above are installed <b>isLocusAvailable(context, 202)</b>!
+	 * @param activity
+	 * @param id
+	 * @throws ActivityNotFoundException
+	 */
+	public static void intentPickFile(Activity activity, int id) throws ActivityNotFoundException {
+		Intent intent = new Intent("org.openintents.action.PICK_FILE");
+		activity.startActivityForResult(intent, id);
+	}
+	
+	public static void intentPickDir(Activity activity, int id) throws ActivityNotFoundException {
+		Intent intent = new Intent("org.openintents.action.PICK_DIRECTORY");
+		activity.startActivityForResult(intent, id);
+	}
+	
 	
 	/***********************************/
 	/*        PARCELABLE PART          */
