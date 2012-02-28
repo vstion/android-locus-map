@@ -266,12 +266,14 @@ public class LocusUtils {
 	 * @param id
 	 * @throws ActivityNotFoundException
 	 */
-	public static void intentPickFile(Activity activity, int id) throws ActivityNotFoundException {
+	public static void intentPickFile(Activity activity, int id) 
+			throws ActivityNotFoundException {
 		Intent intent = new Intent("org.openintents.action.PICK_FILE");
 		activity.startActivityForResult(intent, id);
 	}
 	
-	public static void intentPickDir(Activity activity, int id) throws ActivityNotFoundException {
+	public static void intentPickDir(Activity activity, int id) 
+			throws ActivityNotFoundException {
 		Intent intent = new Intent("org.openintents.action.PICK_DIRECTORY");
 		activity.startActivityForResult(intent, id);
 	}
