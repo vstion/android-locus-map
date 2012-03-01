@@ -92,8 +92,20 @@ public class LocusConst {
 	/**
 	 * Used for receiving locations from Locus
 	 */
-	public static final String ACTION_MAP_MOVED_TO_LOCATION = "android.intent.action.MAP_MOVED_TO_LOCATION";
+	public static final String ACTION_PERIODIC_UPDATE = "menion.android.locus.PERIODIC_UPDATE";
 
+	// content of PERIODIC UPDATE event (PERIDIC_UPDATE_EXTRA)
+	public static final String PUE_VISIBILITY_MAP_SCREEN = "visibility_map_screen";
+
+	public static final String PUE_LOCATION_MAP_CENTER = "location_map_center";
+	public static final String PUE_LOCATION_GPS = "location_gps";
+	
+	public static final String PUE_ACTIVITY_TRACK_RECORD_RECORDING = "activity_track_record_recording";
+	public static final String PUE_ACTIVITY_TRACK_RECORD_PAUSED = "activity_track_record_paused";
+	public static final String PUE_ACTIVITY_TRACK_RECORD_DISTANCE = "activity_track_record_distance";
+	public static final String PUE_ACTIVITY_TRACK_RECORD_TIME = "activity_track_record_time";
+	public static final String PUE_ACTIVITY_TRACK_RECORD_POINTS = "activity_track_record_points";
+	
 	/**
 	 * Used for sending data to Locus. These data should be small (and fast).
 	 * 

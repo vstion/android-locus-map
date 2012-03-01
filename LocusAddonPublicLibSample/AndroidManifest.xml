@@ -53,7 +53,7 @@
 		
 	    <receiver android:name="menion.android.locus.addon.publiclib.sample.EventReceiver">
 			<intent-filter>
-        		<action android:name="android.intent.action.MAP_MOVED_TO_LOCATION" />
+        		<action android:name="menion.android.locus.PERIODIC_UPDATE" />
       		</intent-filter>
     	</receiver>
 		

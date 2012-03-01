@@ -1,8 +1,7 @@
 package menion.android.locus.addon.publiclib.sample;
 
 import menion.android.locus.addon.publiclib.DisplayData;
-import menion.android.locus.addon.publiclib.LocusConst;
-import menion.android.locus.addon.publiclib.LocusIntents;
+import menion.android.locus.addon.publiclib.PeriodicUpdate;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
@@ -22,39 +21,61 @@ public class EventReceiver extends BroadcastReceiver {
 		if (intent == null || intent.getAction() == null)
 			return;
 		
-		if (intent.getAction().equals(LocusConst.ACTION_MAP_MOVED_TO_LOCATION)) {
-			LocusIntents.getLocationFromIntent(intent, 
-					new LocusIntents.OnIntentMainFunction() {
-						@Override
-						public void onLocationReceived(boolean gpsEnabled, Location locGps,
-								Location locMapCenter) {
-							Log.w(TAG, "onLocationReceived(" + gpsEnabled + ", " + locGps + ", " + locMapCenter + ")");
-							Toast.makeText(context, "onLocationReceived(" + gpsEnabled +
-									", " + locGps + ", " + locMapCenter + ")", Toast.LENGTH_LONG).show();
+		// get valid instance of PeriodicUpdate object
+		PeriodicUpdate pu = PeriodicUpdate.getInstance();
 
-							try {
-								// sending back few points near received
-								PointsData pd = new PointsData("send_point_silently");
-								for (int i = 0; i < 10; i++) {
-									Location loc = new Location(TAG);
-									loc.setLatitude(locMapCenter.getLatitude() + (Math.random() - 0.5) / 100.0);
-									loc.setLongitude(locMapCenter.getLongitude() + (Math.random() - 0.5) / 100.0);
-									// point name determine if 
-									pd.addPoint(new Point("Testing point - " + i, loc));
-								}
+		// set notification of new locations to 10m
+		pu.setLocNotificationLimit(10.0);
+		
+		// handle event
+		pu.onReceive(context, intent, new PeriodicUpdate.OnUpdate() {
+			
+			boolean mapVisible;
+			
+			@Override
+			public void onVisibility(boolean mapVisible) {
+				Log.i(TAG, "onVisibility(" + mapVisible + ")");
+				this.mapVisible = mapVisible;
+			}
+			
+			@Override
+			public void onTrackRecord(boolean recording, boolean paused,
+					double recordedDist, long recordedTime, int recordedPoints) {
+				Log.i(TAG, "onTrackRecord(" + recording + ", " + paused + ", " +
+						recordedDist + ", " + recordedTime + ", " + recordedPoints + ")");				
+			}
+			
+			@Override
+			public void onLocation(boolean newMapCenter, boolean newGps) {
+				Log.i(TAG, "onLocation(" + newMapCenter + ", " + newGps + "), mapVisible:" + mapVisible);
+				
+				// sending data back to locus based on events if new map center and map is visible!
+				if (!newMapCenter || !mapVisible)
+					return;
+				
+				try {
+					// sending back few points near received
+					Location mapCenter = PeriodicUpdate.getInstance().getLastMapCenter();
+					PointsData pd = new PointsData("send_point_silently");
+					for (int i = 0; i < 10; i++) {
+						Location loc = new Location(TAG);
+						loc.setLatitude(mapCenter.getLatitude() + (Math.random() - 0.5) / 100.0);
+						loc.setLongitude(mapCenter.getLongitude() + (Math.random() - 0.5) / 100.0);
+						// point name determine if 
+						pd.addPoint(new Point("Testing point - " + i, loc));
+					}
 
-								DisplayData.sendDataSilent(context, pd, true);
-							} catch (RequiredVersionMissingException e) {
-								e.printStackTrace();
-							}
-						}
-						
-						@Override
-						public void onFailed() {
-							Log.w(TAG, "onFailed()");
-						}
-					});
-		}
+					DisplayData.sendDataSilent(context, pd, true);
+				} catch (RequiredVersionMissingException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			@Override
+			public void onIncorrectData() {
+				Toast.makeText(context, "onIncorrectData()", Toast.LENGTH_LONG).show();
+			}
+		});
+		
 	}
-
 }

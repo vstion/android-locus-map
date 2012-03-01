@@ -188,7 +188,10 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
         btn15.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LocusUtils.intentPickFile(LocusAddonPublicLibSampleActivity.this, 0);
+				// filter data so only visible will be GPX and KML files
+				LocusUtils.intentPickFile(LocusAddonPublicLibSampleActivity.this,
+						0, "Give me a FILE!!",
+						new String[] {".gpx", ".kml"});
 			}
 		});
         

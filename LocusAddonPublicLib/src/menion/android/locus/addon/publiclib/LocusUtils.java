@@ -266,16 +266,37 @@ public class LocusUtils {
 	 * @param id
 	 * @throws ActivityNotFoundException
 	 */
-	public static void intentPickFile(Activity activity, int id) 
+	public static void intentPickFile(Activity activity, int requestCode) 
 			throws ActivityNotFoundException {
-		Intent intent = new Intent("org.openintents.action.PICK_FILE");
-		activity.startActivityForResult(intent, id);
+		intentPick("org.openintents.action.PICK_FILE",
+				activity, requestCode, null, null);
 	}
 	
-	public static void intentPickDir(Activity activity, int id) 
+	public static void intentPickFile(Activity activity, int requestCode, String title, String[] filter) 
 			throws ActivityNotFoundException {
-		Intent intent = new Intent("org.openintents.action.PICK_DIRECTORY");
-		activity.startActivityForResult(intent, id);
+		intentPick("org.openintents.action.PICK_FILE",
+				activity, requestCode, title, filter);
+	}
+	
+	public static void intentPickDir(Activity activity, int requestCode) 
+			throws ActivityNotFoundException {
+		intentPick("org.openintents.action.PICK_DIRECTORY",
+				activity, requestCode, null, null);
+	}
+	
+	public static void intentPickDir(Activity activity, int requestCode, String title) 
+			throws ActivityNotFoundException {
+		intentPick("org.openintents.action.PICK_DIRECTORY",
+				activity, requestCode, title, null);
+	}
+	
+	private static void intentPick(String action, Activity activity, int requestCode, String title, String[] filter) {
+		Intent intent = new Intent(action);
+		if (title != null && title.length() > 0)
+			intent.putExtra("org.openintents.extra.TITLE", title);
+		if (filter != null && filter.length > 0)
+			intent.putExtra("org.openintents.extra.FILTER", filter);
+		activity.startActivityForResult(intent, requestCode);
 	}
 	
 	
