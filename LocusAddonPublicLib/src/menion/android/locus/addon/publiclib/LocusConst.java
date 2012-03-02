@@ -100,6 +100,9 @@ public class LocusConst {
 	public static final String PUE_LOCATION_MAP_CENTER = "location_map_center";
 	public static final String PUE_LOCATION_GPS = "location_gps";
 	
+	public static final String PUE_MAP_BOUNDING_BOX = "map_bounding_box";
+	public static final String PUE_MAP_ZOOM_LEVEL = "map_zoom_level";
+	
 	public static final String PUE_ACTIVITY_TRACK_RECORD_RECORDING = "activity_track_record_recording";
 	public static final String PUE_ACTIVITY_TRACK_RECORD_PAUSED = "activity_track_record_paused";
 	public static final String PUE_ACTIVITY_TRACK_RECORD_DISTANCE = "activity_track_record_distance";

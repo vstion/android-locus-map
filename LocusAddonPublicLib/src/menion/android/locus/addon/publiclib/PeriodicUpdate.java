@@ -42,19 +42,38 @@ public class PeriodicUpdate {
 	
 	public interface OnUpdate {
 		
-		public void onVisibility(boolean mapVisible);
-		
-		/**
-		 * When new location is available in intent, grab and return them
-		 * @param mapCenter Current map center location
-		 * @param gps Current GPS location or null if GPS is OFF
-		 */
-		public void onLocation(boolean newMapCenter, boolean newGps);
-		
-		public void onTrackRecord(boolean recording, boolean paused,
-				double recordedDist, long recordedTime, int recordedPoints);
+		public void onUpdate(UpdateContainer update);
 		
 		public void onIncorrectData();
+	}
+	
+	public class UpdateContainer {
+		
+		// is map currently visible
+		public boolean mapVisible = false;
+
+		// is new map center available
+		public boolean newMapCenter = false;
+		// is new GPS location available
+		public boolean newGps = false;
+
+		// current map zoom level (zoom 8 == whole world (1 tile 256x256px))
+		public int mapZoomLevel;
+		// location of top-left map corner
+		public Location mapTopLeft = null;
+		// location of bottom-right map corner
+		public Location mapBottomRight = null;
+		
+		// is track recording enabled
+		public boolean trackRecRecording = false;
+		// if track rec is enabled, is running or paused
+		public boolean trackRecPaused = false;
+		// already recorded distance in metres
+		public double trackRecDist = 0.0;
+		// already recorded times in ms
+		public long trackRecTime = 0L;
+		// already recorded points
+		public int trackRecPoints = 0;
 	}
 	
 	public void onReceive(final Context context, Intent intent, OnUpdate handler) {
@@ -66,44 +85,56 @@ public class PeriodicUpdate {
 			return;
 		}
 		
-		// check VISIBILITY
+		UpdateContainer update = new UpdateContainer();
 		
-		handler.onVisibility(intent.getBooleanExtra(
-				LocusConst.PUE_VISIBILITY_MAP_SCREEN, false));
+		// check VISIBILITY
+		update.mapVisible = intent.getBooleanExtra(
+				LocusConst.PUE_VISIBILITY_MAP_SCREEN, false);
 		
 		// check LOCATIONS
-		
-		boolean newMapCenter = false;
+		update.newMapCenter = false;
 		if (intent.hasExtra(LocusConst.PUE_LOCATION_MAP_CENTER)) {
 			Location loc = intent.getParcelableExtra(LocusConst.PUE_LOCATION_MAP_CENTER);
 			if (mLastMapCenter == null ||
 					mLastMapCenter.distanceTo(loc) > mLocMinDistance) {
 				mLastMapCenter = loc;
-				newMapCenter = true;
+				update.newMapCenter = true;
 			} 
 		}
 
-		boolean newGpsLocation = false;
+		update.newGps = false;
 		if (intent.hasExtra(LocusConst.PUE_LOCATION_GPS)) {
 			Location loc = intent.getParcelableExtra(LocusConst.PUE_LOCATION_GPS);
 			if (mLastGps == null ||
 					mLastGps.distanceTo(loc) > mLocMinDistance) {
 				mLastGps = loc;
-				newGpsLocation = true;
+				update.newGps = true;
 			} 
 		}
 		
-		handler.onLocation(newMapCenter, newGpsLocation);
+		// check MAP
+		update.mapZoomLevel = intent.getIntExtra(LocusConst.PUE_MAP_ZOOM_LEVEL, 0);
+		
+		Location[] locs = (Location[]) intent.getParcelableArrayExtra(
+				LocusConst.PUE_MAP_BOUNDING_BOX);
+		if (locs != null && locs.length == 2) {
+			update.mapTopLeft = locs[0];
+			update.mapBottomRight = locs[1];
+		}
 		
 		// check TRACK RECORD
+		update.trackRecRecording = intent.getBooleanExtra(
+				LocusConst.PUE_ACTIVITY_TRACK_RECORD_RECORDING, false); 
+		update.trackRecPaused = intent.getBooleanExtra(
+				LocusConst.PUE_ACTIVITY_TRACK_RECORD_PAUSED, false);
+		update.trackRecDist = intent.getDoubleExtra(
+				LocusConst.PUE_ACTIVITY_TRACK_RECORD_DISTANCE, 0.0);
+		update.trackRecTime = intent.getLongExtra(
+				LocusConst.PUE_ACTIVITY_TRACK_RECORD_TIME, 0L);
+		update.trackRecPoints = intent.getIntExtra(
+				LocusConst.PUE_ACTIVITY_TRACK_RECORD_POINTS, 0);
 		
-		if (intent.hasExtra(LocusConst.PUE_ACTIVITY_TRACK_RECORD_RECORDING)) {
-			handler.onTrackRecord(
-					intent.getBooleanExtra(LocusConst.PUE_ACTIVITY_TRACK_RECORD_RECORDING, false),
-					intent.getBooleanExtra(LocusConst.PUE_ACTIVITY_TRACK_RECORD_PAUSED, false),
-					intent.getDoubleExtra(LocusConst.PUE_ACTIVITY_TRACK_RECORD_DISTANCE, 0.0),
-					intent.getLongExtra(LocusConst.PUE_ACTIVITY_TRACK_RECORD_TIME, 0L),
-					intent.getIntExtra(LocusConst.PUE_ACTIVITY_TRACK_RECORD_POINTS, 0));
-		}
+		// send update back by handler
+		handler.onUpdate(update);
 	}
 }

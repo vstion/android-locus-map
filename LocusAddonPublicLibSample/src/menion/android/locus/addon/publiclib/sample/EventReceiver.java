@@ -2,6 +2,7 @@ package menion.android.locus.addon.publiclib.sample;
 
 import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.PeriodicUpdate;
+import menion.android.locus.addon.publiclib.PeriodicUpdate.UpdateContainer;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
@@ -30,27 +31,17 @@ public class EventReceiver extends BroadcastReceiver {
 		// handle event
 		pu.onReceive(context, intent, new PeriodicUpdate.OnUpdate() {
 			
-			boolean mapVisible;
-			
 			@Override
-			public void onVisibility(boolean mapVisible) {
-				Log.i(TAG, "onVisibility(" + mapVisible + ")");
-				this.mapVisible = mapVisible;
+			public void onIncorrectData() {
+				Toast.makeText(context, "onIncorrectData()", Toast.LENGTH_LONG).show();
 			}
-			
+
 			@Override
-			public void onTrackRecord(boolean recording, boolean paused,
-					double recordedDist, long recordedTime, int recordedPoints) {
-				Log.i(TAG, "onTrackRecord(" + recording + ", " + paused + ", " +
-						recordedDist + ", " + recordedTime + ", " + recordedPoints + ")");				
-			}
-			
-			@Override
-			public void onLocation(boolean newMapCenter, boolean newGps) {
-				Log.i(TAG, "onLocation(" + newMapCenter + ", " + newGps + "), mapVisible:" + mapVisible);
+			public void onUpdate(UpdateContainer update) {
+				Log.i(TAG, "onUpdate(" + update + ")");
 				
 				// sending data back to locus based on events if new map center and map is visible!
-				if (!newMapCenter || !mapVisible)
+				if (!update.newMapCenter || !update.mapVisible)
 					return;
 				
 				try {
@@ -69,11 +60,6 @@ public class EventReceiver extends BroadcastReceiver {
 				} catch (RequiredVersionMissingException e) {
 					e.printStackTrace();
 				}
-			}
-			
-			@Override
-			public void onIncorrectData() {
-				Toast.makeText(context, "onIncorrectData()", Toast.LENGTH_LONG).show();
 			}
 		});
 		
