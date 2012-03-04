@@ -3,6 +3,7 @@ package menion.android.locus.addon.publiclib;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.os.Parcelable;
 
 public class PeriodicUpdate {
 
@@ -85,6 +86,15 @@ public class PeriodicUpdate {
 			return;
 		}
 		
+		// print content of object, for debug only
+//		Bundle extra = intent.getExtras();
+//		Iterator<String> keys = extra.keySet().iterator();
+//		while (keys.hasNext()) {
+//			String key = keys.next();
+//			Object object = extra.get(key);
+//			Log.w("INFO", "key:" + key + ", obj:" + object);	
+//		}
+
 		UpdateContainer update = new UpdateContainer();
 		
 		// check VISIBILITY
@@ -114,12 +124,16 @@ public class PeriodicUpdate {
 		
 		// check MAP
 		update.mapZoomLevel = intent.getIntExtra(LocusConst.PUE_MAP_ZOOM_LEVEL, 0);
-		
-		Location[] locs = (Location[]) intent.getParcelableArrayExtra(
-				LocusConst.PUE_MAP_BOUNDING_BOX);
-		if (locs != null && locs.length == 2) {
-			update.mapTopLeft = locs[0];
-			update.mapBottomRight = locs[1];
+
+		if (intent.hasExtra(LocusConst.PUE_MAP_BOUNDING_BOX)) {
+			// direct conversion not work, so use this hack
+			Parcelable[] locs = intent.getParcelableArrayExtra(
+					LocusConst.PUE_MAP_BOUNDING_BOX);
+			
+			if (locs != null && locs.length == 2) {
+				update.mapTopLeft = (Location) locs[0];
+				update.mapBottomRight = (Location) locs[1];
+			}
 		}
 		
 		// check TRACK RECORD
