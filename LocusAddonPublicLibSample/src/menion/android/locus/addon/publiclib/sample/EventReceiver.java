@@ -44,6 +44,8 @@ public class EventReceiver extends BroadcastReceiver {
 				if (!update.newMapCenter || !update.mapVisible)
 					return;
 				
+				Toast.makeText(context, "ZoomLevel:" + update.mapZoomLevel, Toast.LENGTH_LONG).show();
+				
 				try {
 					// sending back few points near received
 					Location mapCenter = PeriodicUpdate.getInstance().getLastMapCenter();

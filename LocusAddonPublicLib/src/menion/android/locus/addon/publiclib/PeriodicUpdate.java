@@ -9,6 +9,7 @@ public class PeriodicUpdate {
 
 	private Location mLastMapCenter;
 	private Location mLastGps;
+	private int mLastZoomLevel;
 	
 	private double mLocMinDistance;
 	
@@ -21,7 +22,8 @@ public class PeriodicUpdate {
 	}
 	
 	private PeriodicUpdate() {
-		this.mLocMinDistance = 1.0; 
+		this.mLocMinDistance = 1.0;
+		this.mLastZoomLevel = -1;
 	}
 	
 	/**
@@ -57,6 +59,8 @@ public class PeriodicUpdate {
 		public boolean newMapCenter = false;
 		// is new GPS location available
 		public boolean newGps = false;
+		// is new zoom level on map
+		public boolean newZoomLevel;
 
 		// current map zoom level (zoom 8 == whole world (1 tile 256x256px))
 		public int mapZoomLevel;
@@ -124,6 +128,8 @@ public class PeriodicUpdate {
 		
 		// check MAP
 		update.mapZoomLevel = intent.getIntExtra(LocusConst.PUE_MAP_ZOOM_LEVEL, 0);
+		update.newZoomLevel = update.mapZoomLevel != mLastZoomLevel;
+		mLastZoomLevel = update.mapZoomLevel;
 
 		if (intent.hasExtra(LocusConst.PUE_MAP_BOUNDING_BOX)) {
 			// direct conversion not work, so use this hack
