@@ -84,6 +84,9 @@
 				
 			<Button android:text="Pick directory" android:id="@+id/button16"
 				android:layout_width="match_parent" android:layout_height="wrap_content" />
+			
+			<Button android:text="Get ROOT directory" android:id="@+id/button17"
+				android:layout_width="match_parent" android:layout_height="wrap_content" />
    		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

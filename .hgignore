@@ -1,5 +1,6 @@
 syntax: glob
 LocusAddonPublicLib/bin/
 LocusAddonPublicLib/gen/
+LocusAddonPublicLib/local.properties
 LocusAddonPublicLibSample/bin/
 LocusAddonPublicLibSample/gen/

@@ -79,6 +79,26 @@ public class PeriodicUpdate {
 		public long trackRecTime = 0L;
 		// already recorded points
 		public int trackRecPoints = 0;
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append("UpdateContainer [");
+			sb.append("mapVisible:" + mapVisible).append(", ");
+			sb.append("newMapCenter:" + newMapCenter).append(", ");
+			sb.append("newGps:" + newGps).append(", ");
+			sb.append("newZoomLevel:" + newZoomLevel).append(", ");
+			sb.append("mapZoomLevel:" + mapZoomLevel).append(", ");
+			sb.append("mapTopLeft:" + (mapTopLeft != null)).append(", ");
+			sb.append("mapBottomRight:" + (mapBottomRight != null)).append(", ");
+			sb.append("trackRecRecording:" + trackRecRecording).append(", ");
+			sb.append("trackRecPaused:" + trackRecPaused).append(", ");
+			sb.append("trackRecDist:" + trackRecDist).append(", ");
+			sb.append("trackRecTime:" + trackRecTime).append(", ");
+			sb.append("trackRecPoints:" + trackRecPoints);
+			sb.append("]");
+			return sb.toString();
+		}
 	}
 	
 	public void onReceive(final Context context, Intent intent, OnUpdate handler) {

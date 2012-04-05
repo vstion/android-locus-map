@@ -203,6 +203,21 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			}
 		});
         
+        Button btn17 = (Button) findViewById(R.id.button17);
+        btn17.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+	        	new AlertDialog.Builder(LocusAddonPublicLibSampleActivity.this).
+	        	setTitle("Locus Root directory").
+	        	setMessage("dir:" + calls.getRootDirectory() +
+	        			"\n\n'null' means no required version (206) installed or different problem").
+	        	setPositiveButton("Close", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {}
+				}).show();
+			}
+		});
+        
         /*************************/
         /*    NOW CHECK INTENT   */
         /*************************/

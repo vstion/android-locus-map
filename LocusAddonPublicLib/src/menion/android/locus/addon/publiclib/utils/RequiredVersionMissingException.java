@@ -25,6 +25,10 @@ public class RequiredVersionMissingException extends Exception {
 	
 	private String mistake;
 	
+	public RequiredVersionMissingException(int version) {
+		this(version, version);
+	}
+	
 	public RequiredVersionMissingException(int versionPro, int versionFree) {
 		super("Required version: Pro (" + versionPro + "), or Free (" + versionFree + "), not installed!");
 	}

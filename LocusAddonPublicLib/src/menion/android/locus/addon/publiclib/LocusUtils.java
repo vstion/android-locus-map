@@ -77,19 +77,30 @@ public class LocusUtils {
 	}
 	
 	public static boolean isLocusAvailable(Context context, int versionPro, int versionFree) {
-		PackageInfo pi = getLocusPackageInfo(context);
-		if (pi == null) {
-			return false;
-		} else {
-			if (pi.packageName.equalsIgnoreCase(LOCUS_PRO_PACKAGE_NAME)) {
-				Log.i(TAG, "isLocusAvailable(), Locus Pro, available:" + pi.versionCode + ", needed:" + versionPro);
-				return pi.versionCode >= versionPro;
-			} else if (pi.packageName.equalsIgnoreCase(LOCUS_FREE_PACKAGE_NAME)) {
-				Log.i(TAG, "isLocusAvailable(), Locus Free, available:" + pi.versionCode + ", needed:" + versionPro);
-				return pi.versionCode >= versionFree;
-			} else {
+		if (isLocusFreeAvailable(context, versionPro))
+			return true;
+		if (isLocusProAvailable(context, versionPro))
+			return true;
+		return false;
+	}
+	
+	public static boolean isLocusProAvailable(Context context, int version) {
+		return isLocusAvailable(context, LOCUS_PRO_PACKAGE_NAME, version);
+	}
+
+	public static boolean isLocusFreeAvailable(Context context, int version) {
+		return isLocusAvailable(context, LOCUS_FREE_PACKAGE_NAME, version);
+	}
+	
+	public static boolean isLocusAvailable(Context context, String packageName, int version) {
+		//Log.i(TAG, "isLocusAvailable(" + context + ", " + packageName + ", " + version + ")");
+		try {
+			PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+			if (info == null)
 				return false;
-			}
+			return info.versionCode >= version;
+		} catch (PackageManager.NameNotFoundException e) {
+			return false;
 		}
 	}
 

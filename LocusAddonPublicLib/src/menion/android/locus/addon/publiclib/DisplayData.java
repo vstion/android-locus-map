@@ -57,9 +57,9 @@ public class DisplayData {
 		return sendData(LocusConst.INTENT_DISPLAY_DATA, context, data, callImport);
 	}
 	
-	public static boolean sendDataSilent(Context context, PointsData data, boolean callImport)
+	public static boolean sendDataSilent(Context context, PointsData data)
 			throws RequiredVersionMissingException {
-		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, callImport);
+		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, false);
 	}
 	
 	private static boolean sendData(String action, Context context, PointsData data, boolean callImport)
@@ -84,9 +84,9 @@ public class DisplayData {
 		return sendData(LocusConst.INTENT_DISPLAY_DATA, context, data, callImport);
 	}
 	
-	public static boolean sendDataSilent(Context context, ArrayList<PointsData> data, boolean callImport)
+	public static boolean sendDataSilent(Context context, ArrayList<PointsData> data)
 			throws RequiredVersionMissingException {
-		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, callImport);
+		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, false);
 	}
 	
 	private static boolean sendData(String action, Context context, ArrayList<PointsData> data, boolean callImport)
@@ -119,9 +119,9 @@ public class DisplayData {
 		return sendDataFile(LocusConst.INTENT_DISPLAY_DATA, context, data, filepath, callImport);
 	}
 	
-	public static boolean sendDataFileSilent(Context context, ArrayList<PointsData> data, String filepath, boolean callImport) 
+	public static boolean sendDataFileSilent(Context context, ArrayList<PointsData> data, String filepath) 
 			throws RequiredVersionMissingException {
-		return sendDataFile(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, filepath, callImport);
+		return sendDataFile(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, filepath, false);
 	}
 	
 	private static boolean sendDataFile(String action, Context context, ArrayList<PointsData> data, String filepath,
@@ -205,7 +205,7 @@ public class DisplayData {
 			while (true) {
 				if (dis.available() == 0)
 					break;
-				
+
 				int size = dis.readInt();
 				byte[] data = new byte[size];
 				dis.read(data);
@@ -245,9 +245,9 @@ public class DisplayData {
 		return sendDataCursor(LocusConst.INTENT_DISPLAY_DATA, context, data, uri, callImport);
 	}
 	
-	public static boolean sendDataCursorSilent(Context context, PointsData data, String uri,
-			boolean callImport) throws RequiredVersionMissingException {
-		return sendDataCursor(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, uri, callImport);
+	public static boolean sendDataCursorSilent(Context context, PointsData data, String uri)
+			throws RequiredVersionMissingException {
+		return sendDataCursor(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, uri, false);
 	}
 	
 	private static boolean sendDataCursor(String action, Context context, PointsData data, String uri,
@@ -276,8 +276,8 @@ public class DisplayData {
 	}
 	
 	public static boolean sendDataCursorSilent(Context context, ArrayList<PointsData> data,
-			String uri, boolean callImport) throws RequiredVersionMissingException {
-		return sendDataCursor(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, uri, callImport);
+			String uri) throws RequiredVersionMissingException {
+		return sendDataCursor(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, data, uri, false);
 	}
 	
 	private static boolean sendDataCursor(String action, Context context, ArrayList<PointsData> data,
@@ -300,9 +300,9 @@ public class DisplayData {
 		return sendData(LocusConst.INTENT_DISPLAY_DATA, context, track, callImport);
 	}
 	
-	public static boolean sendDataSilent(Context context, Track track, boolean callImport)
+	public static boolean sendDataSilent(Context context, Track track)
 			throws RequiredVersionMissingException {
-		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, track, callImport);
+		return sendData(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, track, false);
 	}
 	
 	private static boolean sendData(String action, Context context, Track track, boolean callImport)
@@ -319,9 +319,9 @@ public class DisplayData {
 		return sendDataTracks(LocusConst.INTENT_DISPLAY_DATA, context, tracks, callImport);
 	}
 	
-	public static boolean sendDataTracksSilent(Context context, ArrayList<Track> tracks, boolean callImport)
+	public static boolean sendDataTracksSilent(Context context, ArrayList<Track> tracks)
 			throws RequiredVersionMissingException {
-		return sendDataTracks(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, tracks, callImport);
+		return sendDataTracks(LocusConst.ACTION_DISPLAY_DATA_SILENTLY, context, tracks, false);
 	}
 	
 	private static boolean sendDataTracks(String action, Context context, ArrayList<Track> tracks, boolean callImport)
@@ -347,7 +347,7 @@ public class DisplayData {
 		// set correct versions (mainly due to new functionality)
 		if (action.equals(LocusConst.ACTION_DISPLAY_DATA_SILENTLY)) {
 			versionFree = Math.max(versionFree, 202);
-			versionPro = Math.max(versionFree, 202);
+			versionPro = Math.max(versionPro, 202);
 		}
 		
 		// really exist locus?

@@ -20,10 +20,13 @@
 package menion.android.locus.addon.publiclib;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
 
 public class LocusIntents {
 
@@ -298,5 +301,40 @@ public class LocusIntents {
 		intent.putExtra(LocusConst.EXTRA_POINT, p);
 		intent.putExtra(LocusConst.EXTRA_POINT_OVERWRITE, overridePoint);
 		return intent;
+	}
+	
+	/**********************************/
+	/*         INFO FUNCTIONS         */
+	/**********************************/
+	
+	public static String getLocusRootDirectory(Context context) throws RequiredVersionMissingException {
+		Cursor cursor = null;
+		if (LocusUtils.isLocusFreeAvailable(context, 206))
+			cursor = context.getContentResolver().query(
+					Uri.parse("content://menion.android.locus.free.LocusInfoData"),
+					null, null, null, null);
+		else if (LocusUtils.isLocusProAvailable(context, 206))
+			cursor = context.getContentResolver().query(
+					Uri.parse("content://menion.android.locus.pro.LocusInfoData"),
+					null, null, null, null);
+		
+		if (cursor == null) {
+			throw new RequiredVersionMissingException(206);
+		}
+		
+		try {
+			for (int i = 0; i < cursor.getCount(); i++)  {
+				cursor.moveToPosition(i);
+				String key = cursor.getString(0);
+				String value = cursor.getString(1);
+				if (key.equals("rootDir"))
+					return value;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cursor.close();
+		}
+		return null;
 	}
 }

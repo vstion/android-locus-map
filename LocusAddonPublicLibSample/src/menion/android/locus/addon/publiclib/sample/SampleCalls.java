@@ -20,10 +20,12 @@
 package menion.android.locus.addon.publiclib.sample;
 
 import java.io.File;
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusConst;
+import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
@@ -260,6 +262,19 @@ public class SampleCalls {
 			Intent intent = new Intent(LocusConst.ACTION_PICK_LOCATION);
 			activity.startActivity(intent);			
 		}
+	}
+	
+	public String getRootDirectory() {
+		// check availability and start action
+		if (LocusUtils.isLocusAvailable(activity, 206)) {
+			try {
+				return LocusIntents.getLocusRootDirectory(activity);
+			} catch (InvalidObjectException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}
+		return null;
 	}
 	
 	/*****************************/

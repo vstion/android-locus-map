@@ -58,7 +58,7 @@ public class EventReceiver extends BroadcastReceiver {
 						pd.addPoint(new Point("Testing point - " + i, loc));
 					}
 
-					DisplayData.sendDataSilent(context, pd, true);
+					DisplayData.sendDataSilent(context, pd);
 				} catch (RequiredVersionMissingException e) {
 					e.printStackTrace();
 				}
