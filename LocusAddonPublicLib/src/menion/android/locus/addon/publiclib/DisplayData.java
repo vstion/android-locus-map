@@ -377,7 +377,7 @@ public class DisplayData {
 		return true;
 	}
 	
-	private static boolean hasData(Intent intent) {
+	public static boolean hasData(Intent intent) {
 		if (intent == null)
 			return false;
 		

@@ -28,6 +28,10 @@ public class Point implements Parcelable {
 	
 	private static final int VERSION = 1;
 	
+	/* I cannot simply change version to 2, because this will completely destroy
+	 * compatibility with add-ons that use this lib, damn! */
+//	/* point unique ID */
+//	private long mId; 
 	/* mName of object */
 	private String mName;
 	/* mDesc of object */
@@ -42,6 +46,11 @@ public class Point implements Parcelable {
 	private PointGeocachingData mGeoCachingData;
 	
 	public Point(String name, Location loc) {
+//		this(0L, name, loc);
+//	}
+//	
+//	public Point(long id, String name, Location loc) {
+//		this.mId = id;
 		this.mName = name;
 		this.mDesc = null;
 		this.mLoc = loc;
@@ -50,6 +59,10 @@ public class Point implements Parcelable {
 		this.mGeoCachingData = null;
 	}
 
+//	public long getId() {
+//		return mId;
+//	}
+	
 	public String getName() {
 		return mName;
 	}
@@ -166,6 +179,10 @@ public class Point implements Parcelable {
     
     private Point(Parcel in) {
     	int version = in.readInt();
+//    	// load id
+//    	mId = 0L;
+//    	if (version == 2)
+//    		mId = in.readLong();
 		// load name
 		mName = in.readString();
 		// load description
@@ -196,11 +213,13 @@ public class Point implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
+//		// write ID
+//		dest.writeLong(mId);
 		// write name
 		dest.writeString(mName);
 		// write description
 		dest.writeString(mDesc);
-		// write location as separate values (due to some problems with 'magic number'
+		// write location as separate values (due to some problems with 'magic number')
 		LocusUtils.writeLocation(dest, mLoc);
 		// write extra
 		dest.writeString(mExtraCallback);

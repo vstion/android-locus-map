@@ -269,7 +269,7 @@ public class SampleCalls {
 		if (LocusUtils.isLocusAvailable(activity, 206)) {
 			try {
 				return LocusIntents.getLocusRootDirectory(activity);
-			} catch (InvalidObjectException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}			

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layoutMainRelativeLayoutMain"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<menion.android.locus.addon.ar.AugmentedCamera
+		android:id="@+id/augmentedCamera"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"/>
+		
+	<menion.android.locus.addon.ar.AugmentedView
+		android:id="@+id/augmentedView"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"/>
+		
+	<LinearLayout style="@style/Panel"
+		android:layout_alignParentLeft="true">
+		<ImageButton
+			android:id="@+id/btn_home"
+			style="@style/PanelButton"
+            android:src="@drawable/ic_home" />
+            
+        <ImageView style="@style/SeparatorHorizontal" />
+        <ImageButton style="@style/PanelButton.Height"
+        	android:id="@+id/btn_zoom_in"
+            android:src="@drawable/ic_zoom_in" />
+            
+        <ImageView style="@style/SeparatorHorizontal" />
+        <ImageButton style="@style/PanelButton.Height"
+        	android:id="@+id/btn_zoom_out"
+            android:src="@drawable/ic_zoom_out" />
+    </LinearLayout>      	
+</RelativeLayout>

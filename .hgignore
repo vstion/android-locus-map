@@ -1,4 +1,7 @@
 syntax: glob
+LocusAddonAR/_release
+LocusAddonAR/bin
+LocusAddonAR/gen
 LocusAddonPublicLib/bin/
 LocusAddonPublicLib/gen/
 LocusAddonPublicLib/local.properties

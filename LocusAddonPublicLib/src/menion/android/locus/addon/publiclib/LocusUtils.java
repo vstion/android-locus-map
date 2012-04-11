@@ -21,6 +21,8 @@ package menion.android.locus.addon.publiclib;
 
 import java.io.File;
 
+import menion.android.locus.addon.publiclib.utils.Utils;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -30,7 +32,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Parcel;
-import android.util.Log;
 
 /**
  * Locus Helper class
@@ -41,7 +42,7 @@ import android.util.Log;
  */
 public class LocusUtils {
 
-	private static final String TAG = "LocusUtils";
+//	private static final String TAG = "LocusUtils";
 	
 	/***********************************/
 	/*           CHECK PART            */
@@ -93,15 +94,7 @@ public class LocusUtils {
 	}
 	
 	public static boolean isLocusAvailable(Context context, String packageName, int version) {
-		//Log.i(TAG, "isLocusAvailable(" + context + ", " + packageName + ", " + version + ")");
-		try {
-			PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
-			if (info == null)
-				return false;
-			return info.versionCode >= version;
-		} catch (PackageManager.NameNotFoundException e) {
-			return false;
-		}
+		return Utils.isAppAvailable(context, packageName, version);
 	}
 
 	/**
