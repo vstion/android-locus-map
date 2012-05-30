@@ -19,6 +19,8 @@
 
 package menion.android.locus.addon.publiclib;
 
+import java.io.InvalidObjectException;
+
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.app.Activity;
@@ -27,6 +29,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
+import android.text.TextUtils;
 
 public class LocusIntents {
 
@@ -281,6 +284,28 @@ public class LocusIntents {
 		} else {
 			return null;
 		}
+	}
+	
+	/*
+	  Add own WMS map
+	  ------------------------------------
+	  - this feature allow 3rd party application, add web address directly to list of WMS services in
+	  Map Manager screen / WMS tab
+	 */
+	
+	public static void callAddNewWmsMap(Context context, String wmsUrl)
+			throws RequiredVersionMissingException, InvalidObjectException {
+		// check availability and start action
+		if (!LocusUtils.isLocusAvailable(context, 216)) {
+			throw new RequiredVersionMissingException(216);
+		}
+		if (TextUtils.isEmpty(wmsUrl)) {
+			throw new InvalidObjectException("WMS Url address \'" + wmsUrl + "\', is not valid!");
+		}
+		
+		Intent intent = new Intent(LocusConst.ACTION_ADD_NEW_WMS_MAP);
+		intent.putExtra(LocusConst.EXTRA_ADD_NEW_WMS_MAP_URL, wmsUrl);
+		context.startActivity(intent);
 	}
 	
 	/**********************************/

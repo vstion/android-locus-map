@@ -29,7 +29,7 @@ import android.os.Parcelable;
 
 public class PointsData implements Parcelable {
 
-	private static final int VERSION = 0;
+	private static final int VERSION = 1;
 	
 	// Unique name. PointsData send to Locus with same name will be overwrite in Locus
 	private String mName;
@@ -85,19 +85,24 @@ public class PointsData implements Parcelable {
 
     @SuppressWarnings("unchecked")
 	private PointsData(Parcel in) {
-    	switch (in.readInt()) {
+    	int version = in.readInt();
+		mName = in.readString();
+		int size = in.readInt();
+		if (size > 0) {
+			byte[] data = new byte[size];
+			in.readByteArray(data);
+			mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+		} else {
+			mBitmap = null;
+		}
+
+    	switch (version) {
     	case 0:
-    		mName = in.readString();
-    		int size = in.readInt();
-    		if (size > 0) {
-    			byte[] data = new byte[size];
-    			in.readByteArray(data);
-    			mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-    		} else {
-    			mBitmap = null;
-    		}
-    		
     		mPoints = in.readArrayList(Point.class.getClassLoader());
+    		break;
+    	case 1:
+    		mPoints = new ArrayList<Point>();
+    		in.readTypedList(mPoints, Point.CREATOR);
     		break;
     	}
     }
@@ -117,7 +122,7 @@ public class PointsData implements Parcelable {
 				dest.writeByteArray(data);
 			}
 		}
-		dest.writeList(mPoints);
+		dest.writeTypedList(mPoints);
 	}
 	
 	private static byte[] getBitmapAsByte(Bitmap bitmap) {

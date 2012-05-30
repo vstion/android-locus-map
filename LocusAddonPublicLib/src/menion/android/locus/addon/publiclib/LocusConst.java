@@ -37,6 +37,13 @@ public class LocusConst {
 	public static final String ACTION_PICK_LOCATION = "android.intent.action.LOCUS_PICK_LOCATION";
 	
 	/**
+	 * Intent that allow to send WMS url link directly into Locus
+	 * Available since Locus 2.4.1 (code 216)
+	 */
+	public static final String ACTION_ADD_NEW_WMS_MAP = "android.intent.action.LOCUS_ADD_NEW_WMS_MAP";
+	public static final String EXTRA_ADD_NEW_WMS_MAP_URL = "wms_url";
+	
+	/**
 	 * Action used for receiving Location from Locus
 	 */
 	public static final String ACTION_RECEIVE_LOCATION = "android.intent.action.ON_LOCATION_RECEIVE";

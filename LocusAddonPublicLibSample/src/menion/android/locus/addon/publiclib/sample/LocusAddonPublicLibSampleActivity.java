@@ -218,6 +218,19 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			}
 		});
         
+        Button btn18 = (Button) findViewById(R.id.button18);
+        btn18.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+					LocusIntents.callAddNewWmsMap(LocusAddonPublicLibSampleActivity.this,
+							"http://wms.geology.cz/wmsconnector/com.esri.wms.Esrimap/CGS_Geomagnetic_Field?SERVICE=WMS&REQUEST=GetCapabilities");
+				} catch (Exception e) {
+					Log.e(TAG, "onClick()", e);
+				}
+			}
+		});
+        
         /*************************/
         /*    NOW CHECK INTENT   */
         /*************************/
