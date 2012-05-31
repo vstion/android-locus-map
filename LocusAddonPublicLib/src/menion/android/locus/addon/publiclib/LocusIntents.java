@@ -205,17 +205,31 @@ public class LocusIntents {
    			// more below ...
 		}
 	 */
-	
+
 	public static boolean isIntentMainFunction(Intent intent) {
-		return isRequiredAction(intent, LocusConst.INTENT_MAIN_FUNCTION);
+		return isIntentMenuItem(intent, LocusConst.INTENT_ITEM_MAIN_FUNCTION);
 	}
 	
-	public interface OnIntentMainFunction {
-		public void onLocationReceived(boolean gpsEnabled, Location locGps, Location locMapCenter);
-		public void onFailed();
-	}
 	
 	public static void handleIntentMainFunction(Intent intent, OnIntentMainFunction handler) 
+			throws NullPointerException {
+		handleIntentMenuItem(intent, handler, LocusConst.INTENT_ITEM_MAIN_FUNCTION);
+	}
+	
+	public static boolean isIntentSearchList(Intent intent) {
+		return isIntentMenuItem(intent, LocusConst.INTENT_ITEM_SEARCH_LIST);
+	}
+	
+	public static void handleIntentSearchList(Intent intent, OnIntentMainFunction handler) 
+			throws NullPointerException {
+		handleIntentMenuItem(intent, handler, LocusConst.INTENT_ITEM_SEARCH_LIST);
+	}
+	
+	public static boolean isIntentMenuItem(Intent intent, String item) {
+		return isRequiredAction(intent, item);
+	}
+	
+	public static void handleIntentMenuItem(Intent intent, OnIntentMainFunction handler, String item) 
 			throws NullPointerException {
 		// check source data
 		if (intent == null)
@@ -223,7 +237,7 @@ public class LocusIntents {
 		if (handler == null)
 			throw new NullPointerException("Handler cannot be null");
 		// check intent itself
-		if (!isIntentMainFunction(intent)) {
+		if (!isIntentMenuItem(intent, item)) {
 			handler.onFailed();
 			return;
 		}
@@ -231,12 +245,23 @@ public class LocusIntents {
 		getLocationFromIntent(intent, handler);
 	}
 	
+	public interface OnIntentMainFunction {
+		/**
+		 * When intent really contain location, result is returned by this function
+		 * @param gpsEnabled true/false if GPS in Locus is enabled
+		 * @param locGps if gpsEnabled is true, variable contain location, otherwise null
+		 * @param locMapCenter contain current map center location
+		 */
+		public void onLocationReceived(boolean gpsEnabled, Location locGps, Location locMapCenter);
+		public void onFailed();
+	}
+	
 	public static void getLocationFromIntent(Intent intent, OnIntentMainFunction handler) {
 		boolean gpsEnabled = intent.getBooleanExtra("gpsEnabled", false);
 		handler.onLocationReceived(gpsEnabled,
 				gpsEnabled ? (Location)intent.getParcelableExtra("locGps") : null,
 				(Location) intent.getParcelableExtra("locCenter"));
-	}
+	}	
 	
 	/*
 	   Pick location from Locus
@@ -296,8 +321,8 @@ public class LocusIntents {
 	public static void callAddNewWmsMap(Context context, String wmsUrl)
 			throws RequiredVersionMissingException, InvalidObjectException {
 		// check availability and start action
-		if (!LocusUtils.isLocusAvailable(context, 216)) {
-			throw new RequiredVersionMissingException(216);
+		if (!LocusUtils.isLocusAvailable(context, 217)) {
+			throw new RequiredVersionMissingException(217);
 		}
 		if (TextUtils.isEmpty(wmsUrl)) {
 			throw new InvalidObjectException("WMS Url address \'" + wmsUrl + "\', is not valid!");

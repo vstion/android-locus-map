@@ -78,7 +78,7 @@ public class LocusUtils {
 	}
 	
 	public static boolean isLocusAvailable(Context context, int versionPro, int versionFree) {
-		if (isLocusFreeAvailable(context, versionPro))
+		if (isLocusFreeAvailable(context, versionFree))
 			return true;
 		if (isLocusProAvailable(context, versionPro))
 			return true;

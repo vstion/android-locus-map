@@ -224,7 +224,7 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 			public void onClick(View v) {
 				try {
 					LocusIntents.callAddNewWmsMap(LocusAddonPublicLibSampleActivity.this,
-							"http://wms.geology.cz/wmsconnector/com.esri.wms.Esrimap/CGS_Geomagnetic_Field?SERVICE=WMS&REQUEST=GetCapabilities");
+							"http://wms.geology.cz/wmsconnector/com.esri.wms.Esrimap/CGS_Geomagnetic_Field");
 				} catch (Exception e) {
 					Log.e(TAG, "onClick()", e);
 				}
@@ -287,6 +287,26 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 						Location locMapCenter) {
 		        	new AlertDialog.Builder(LocusAddonPublicLibSampleActivity.this).
 		        	setTitle("Intent - Main function").
+		        	setMessage("GPS location:" + gpsEnabled + "\n\n" + locGps + "\n\nmapCenter:" + locMapCenter).
+		        	setPositiveButton("Close", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {}
+					}).show();
+				}
+				
+				@Override
+				public void onFailed() {
+					Toast.makeText(LocusAddonPublicLibSampleActivity.this, "Wrong INTENT!", Toast.LENGTH_SHORT).show();
+				}
+			});
+        } else if (LocusIntents.isIntentSearchList(intent)) {
+        	LocusIntents.handleIntentSearchList(intent,
+        			new LocusIntents.OnIntentMainFunction() {
+				@Override
+				public void onLocationReceived(boolean gpsEnabled, Location locGps,
+						Location locMapCenter) {
+		        	new AlertDialog.Builder(LocusAddonPublicLibSampleActivity.this).
+		        	setTitle("Intent - Search list").
 		        	setMessage("GPS location:" + gpsEnabled + "\n\n" + locGps + "\n\nmapCenter:" + locMapCenter).
 		        	setPositiveButton("Close", new DialogInterface.OnClickListener() {
 						@Override

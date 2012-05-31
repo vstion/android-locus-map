@@ -27,7 +27,15 @@ public class LocusConst {
 	 */
 	public static final String INTENT_GET_LOCATION = "menion.android.locus.GET_POINT";
 	public static final String INTENT_ON_POINT_ACTION = "menion.android.locus.ON_POINT_ACTION";
-	public static final String INTENT_MAIN_FUNCTION = "menion.android.locus.MAIN_FUNCTION";
+
+	/**
+	 * This Filter add your activity into list of main functions
+	 */
+	public static final String INTENT_ITEM_MAIN_FUNCTION = "menion.android.locus.MAIN_FUNCTION";
+	/**
+	 * This Filter add your activity into list of search options in Locus "Search" function
+	 */
+	public static final String INTENT_ITEM_SEARCH_LIST = "menion.android.locus.SEARCH_LIST";
 	
 	/**
 	 * Intent used for getting location from Locus to your application. This one, is used just to start
