@@ -19,9 +19,12 @@
 
 package menion.android.locus.addon.publiclib;
 
+import java.io.File;
 import java.io.InvalidObjectException;
+import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.app.Activity;
 import android.content.Context;
@@ -210,7 +213,6 @@ public class LocusIntents {
 		return isIntentMenuItem(intent, LocusConst.INTENT_ITEM_MAIN_FUNCTION);
 	}
 	
-	
 	public static void handleIntentMainFunction(Intent intent, OnIntentMainFunction handler) 
 			throws NullPointerException {
 		handleIntentMenuItem(intent, handler, LocusConst.INTENT_ITEM_MAIN_FUNCTION);
@@ -223,6 +225,22 @@ public class LocusIntents {
 	public static void handleIntentSearchList(Intent intent, OnIntentMainFunction handler) 
 			throws NullPointerException {
 		handleIntentMenuItem(intent, handler, LocusConst.INTENT_ITEM_SEARCH_LIST);
+	}
+	
+	public static boolean isIntentPointsScreenTools(Intent intent) {
+		return isRequiredAction(intent, LocusConst.INTENT_ITEM_POINTS_SCREEN_TOOLS);
+	}
+	
+	public static ArrayList<PointsData> handleIntentPointsScreenTools(Intent intent) {
+		ArrayList<PointsData> data = null;
+		if (intent.hasExtra(LocusConst.EXTRA_POINTS_FILE_PATH)) {
+			String filepath = intent.getStringExtra(LocusConst.EXTRA_POINTS_FILE_PATH);
+			if (filepath != null && new File(filepath).exists()) {
+				// data stored in file, proceed
+				data = DisplayData.getDataFile(filepath);
+			}
+		}
+		return data;
 	}
 	
 	public static boolean isIntentMenuItem(Intent intent, String item) {

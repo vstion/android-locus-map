@@ -126,6 +126,16 @@ public class DisplayData {
 	
 	private static boolean sendDataFile(String action, Context context, ArrayList<PointsData> data, String filepath,
 			boolean callImport) throws RequiredVersionMissingException {
+		if (sendDataWriteOnCard(data, filepath)) {
+			Intent intent = new Intent();
+			intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, filepath);
+			return sendData(action, context, intent, callImport);	
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean sendDataWriteOnCard(ArrayList<PointsData> data, String filepath) {
 		if (data == null || data.size() == 0)
 			return false;
 		
@@ -160,8 +170,9 @@ public class DisplayData {
 			}
 				
 			os.flush();
+			return true;
 		} catch (Exception e) {
-			Log.e(TAG, "saveBytesInstant(" + filepath + ", " + data + ")", e);
+			Log.e(TAG, "sendDataWriteOnCard(" + filepath + ", " + data + ")", e);
 			return false;
 		} finally {
 			try {
@@ -169,14 +180,9 @@ public class DisplayData {
 					dos.close();
 				}
 			} catch (Exception e) {
-				Log.e(TAG, "saveBytesInstant(" + filepath + ", " + data + ")", e);
+				Log.e(TAG, "sendDataWriteOnCard(" + filepath + ", " + data + ")", e);
 			}
 		}
-		
-		// store data to file
-		Intent intent = new Intent();
-		intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, filepath);
-		return sendData(action, context, intent, callImport);
 	}
 
 	/**

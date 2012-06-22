@@ -20,6 +20,7 @@
 package menion.android.locus.addon.publiclib.sample;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.LocusConst;
 import menion.android.locus.addon.publiclib.LocusIntents;
@@ -319,6 +320,25 @@ public class LocusAddonPublicLibSampleActivity extends Activity {
 					Toast.makeText(LocusAddonPublicLibSampleActivity.this, "Wrong INTENT!", Toast.LENGTH_SHORT).show();
 				}
 			});
+        } else if (LocusIntents.isIntentPointsScreenTools(intent)) {
+        	ArrayList<PointsData> points = LocusIntents.handleIntentPointsScreenTools(intent);
+        	if (points == null || points.size() == 0) {
+	        	new AlertDialog.Builder(LocusAddonPublicLibSampleActivity.this).
+	        	setTitle("Intent - Points screen (Tools)").
+	        	setMessage("Problem with loading points").
+	        	setPositiveButton("Close", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {}
+				}).show();
+        	} else {
+	        	new AlertDialog.Builder(LocusAddonPublicLibSampleActivity.this).
+	        	setTitle("Intent - Points screen (Tools)").
+	        	setMessage("Loaded from file:" + points.get(0).getPoints().size() + " points!").
+	        	setPositiveButton("Close", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {}
+				}).show();
+        	}
         } else if (intent.hasExtra("myOnDisplayExtraActionId")) {
         	String value = intent.getStringExtra("myOnDisplayExtraActionId");
 

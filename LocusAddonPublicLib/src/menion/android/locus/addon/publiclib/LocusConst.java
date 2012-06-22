@@ -36,6 +36,10 @@ public class LocusConst {
 	 * This Filter add your activity into list of search options in Locus "Search" function
 	 */
 	public static final String INTENT_ITEM_SEARCH_LIST = "menion.android.locus.SEARCH_LIST";
+	/**
+	 * This Filter add your activity into list of tools in Points screen
+	 */
+	public static final String INTENT_ITEM_POINTS_SCREEN_TOOLS = "menion.android.locus.POINTS_SCREEN_TOOLS";
 	
 	/**
 	 * Intent used for getting location from Locus to your application. This one, is used just to start

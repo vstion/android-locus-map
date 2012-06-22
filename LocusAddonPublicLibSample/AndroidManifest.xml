@@ -46,7 +46,13 @@
       			<category android:name="android.intent.category.DEFAULT" />
    			</intent-filter>
    			
-            <!-- thanks to this, app can handle incomming locations -->
+            <!-- thanks to this, app appear in points screen - tools button -->
+			<intent-filter>
+      			<action android:name="menion.android.locus.POINTS_SCREEN_TOOLS" />
+      			<category android:name="android.intent.category.DEFAULT" />
+   			</intent-filter>
+			
+			<!-- thanks to this, app can handle incomming locations -->
 			<intent-filter>
       			<action android:name="android.intent.action.ON_LOCATION_RECEIVE" />
       			<category android:name="android.intent.category.DEFAULT" />
