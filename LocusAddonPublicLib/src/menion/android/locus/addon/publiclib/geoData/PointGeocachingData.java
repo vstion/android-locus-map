@@ -34,7 +34,7 @@ public class PointGeocachingData implements Parcelable {
 	
 	private static final int VERSION = 2;
 	
-	public static final int CACHE_NUMBER_OF_TYPES = 14;
+	public static final int CACHE_NUMBER_OF_TYPES = 20;
 	
 	public static final int CACHE_TYPE_TRADITIONAL = 0;
 	public static final int CACHE_TYPE_MULTI = 1;
@@ -50,6 +50,12 @@ public class PointGeocachingData implements Parcelable {
 	public static final int CACHE_TYPE_GPS_ADVENTURE = 11;
 	public static final int CACHE_TYPE_WEBCAM = 12;
 	public static final int CACHE_TYPE_LOCATIONLESS = 13;
+	public static final int CACHE_TYPE_BENCHMARK = 14;
+	public static final int CACHE_TYPE_MAZE_EXHIBIT = 15;
+	public static final int CACHE_TYPE_WAYMARK = 16;
+	public static final int CACHE_TYPE_GROUNDSPEAK = 17;
+	public static final int CACHE_TYPE_LF_EVENT = 18;
+	public static final int CACHE_TYPE_LF_CELEBRATION = 19;
 
 	public static final int CACHE_LOG_TYPE_UNKNOWN = -1;
 	public static final int CACHE_LOG_TYPE_FOUNDED = 0;
